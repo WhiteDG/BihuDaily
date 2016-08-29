@@ -1,0 +1,32 @@
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.white.bihudaily.detail.DetailActivity">
+
+    <item
+        android:id="@+id/menu_share"
+        android:icon="@drawable/share"
+        android:title="@string/menu_share"
+        app:showAsAction="always"
+        />
+    <item
+        android:id="@+id/menu_star"
+        android:icon="@drawable/collect"
+        android:title="@string/menu_star"
+        app:showAsAction="always"
+        />
+    <item
+
+        android:id="@+id/menu_comment"
+        android:icon="@drawable/comment"
+        android:title="@string/menu_comment"
+        app:showAsAction="always|withText"
+        />
+    <item
+        android:id="@+id/menu_like"
+        android:icon="@drawable/praise"
+        android:title="@string/menu_like"
+        app:showAsAction="always|withText"
+        />
+</menu>

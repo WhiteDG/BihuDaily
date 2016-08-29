@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest package="com.white.bihudaily"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+    <application
+        android:name=".app.BihuDailyApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/TestDayAndNight">
+        <activity android:name=".splash.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".dailys.DailyActivity">
+        </activity>
+        <activity android:name=".detail.DetailActivity">
+        </activity>
+        <activity android:name=".detail.ThemeDetailActivity">
+        </activity>
+        <activity android:name=".editor.EditorActivity">
+        </activity>
+        <activity android:name=".comment.CommentActivity">
+        </activity>
+        <activity android:name=".mystar.MyStarActivity">
+        </activity>
+        <activity android:name=".editor.EditorInfoActivity">
+        </activity>
+        <activity android:name=".login.LoginActivity">
+        </activity>
+        <activity android:name=".bigimage.ImageViewActivity">
+        </activity>
+        <activity android:name=".settings.SettingActivity">
+        </activity>
+
+    </application>
+
+</manifest>

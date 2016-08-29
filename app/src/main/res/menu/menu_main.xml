@@ -1,0 +1,30 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context=".view.activity.MainActivity">
+
+    <item
+        android:id="@+id/action_notification"
+        android:icon="@drawable/message"
+        android:title="@string/action_notification"
+        app:showAsAction="ifRoom"
+        />
+
+    <item
+        android:id="@+id/action_night"
+        android:title="@string/action_night_mode"
+        app:showAsAction="collapseActionView"
+        />
+
+    <item
+        android:id="@+id/action_setting"
+        android:title="@string/action_settings"
+        app:showAsAction="collapseActionView"
+        />
+
+    <!--<item-->
+    <!--android:id="@+id/action_settings"-->
+    <!--android:orderInCategory="100"-->
+    <!--android:title="@string/action_settings"-->
+    <!--app:showAsAction="never"/>-->
+</menu>

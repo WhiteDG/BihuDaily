@@ -1,0 +1,52 @@
+<resources>
+    <string name="app_name">BihuDaily</string>
+
+    <string name="index">首页</string>
+    <string name="my_star">我的收藏</string>
+    <string name="get_long_comment_fail">获取长评论列表失败</string>
+    <string name="get_short_comment_fail">获取短评论列表失败</string>
+
+    <string name="comment_title"> 条点评</string>
+    <string name="editor_list_title">主编</string>
+    <string name="editor_info_title">主编资料</string>
+
+    <string name="share_this_news">share_this_news</string>
+    <string name="news_preview_image">news_preview_image</string>
+
+    <string name="action_settings">设置选项</string>
+    <string name="action_night_mode">夜间模式</string>
+    <string name="action_day_mode">日间模式</string>
+    <string name="action_notification">消息</string>
+
+    <!-- 侧滑主题菜单 -->
+    <string name="menu_psychology">日常心理学</string>
+    <string name="menu_user_recommend">用户推荐日报</string>
+    <string name="menu_movie">电影日报</string>
+    <string name="menu_no_boring">不许无聊</string>
+    <string name="menu_design">设计日报</string>
+    <string name="menu_big_company">大公司日报</string>
+    <string name="menu_finance">财经日报</string>
+    <string name="menu_internet_save">互联网安全</string>
+    <string name="menu_start_game">开始游戏</string>
+    <string name="menu_music">音乐日报</string>
+    <string name="menu_manga">动漫日报</string>
+    <string name="menu_sport">体育日报</string>
+
+    <!-- 详情界面菜单 -->
+    <string name="menu_share">分享</string>
+    <string name="menu_star">收藏</string>
+    <string name="menu_stared">已收藏</string>
+    <string name="menu_comment">评论</string>
+    <string name="menu_like">点赞</string>
+    <string name="menu_liked">已赞</string>
+
+    <string name="load_fail">加载失败</string>
+
+    <string name="today_news">今日热闻</string>
+    <string name="offline">离线下载</string>
+
+
+    <string name="action_news_comment_default">…</string>
+    <string name="action_news_like_default">…</string>
+
+</resources>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/menu_main_page"
+            android:checked="true"
+            android:icon="@drawable/menu_home"
+            android:title="@string/index"/>
+
+        <item
+            android:id="@+id/menu_psychology"
+            android:orderInCategory="13"
+            android:title="@string/menu_psychology"/>
+        <item
+            android:id="@+id/menu_user_recommend"
+            android:orderInCategory="12"
+            android:title="@string/menu_user_recommend"/>
+        <item
+            android:id="@+id/menu_movie"
+            android:orderInCategory="3"
+            android:title="@string/menu_movie"/>
+        <item
+            android:id="@+id/menu_no_boring"
+            android:orderInCategory="11"
+            android:title="@string/menu_no_boring"/>
+        <item
+            android:id="@+id/menu_design"
+            android:orderInCategory="4"
+            android:title="@string/menu_design"/>
+        <item
+            android:id="@+id/menu_big_company"
+            android:orderInCategory="5"
+            android:title="@string/menu_big_company"/>
+        <item
+            android:id="@+id/menu_finance"
+            android:orderInCategory="6"
+            android:title="@string/menu_finance"/>
+        <item
+            android:id="@+id/menu_internet_save"
+            android:orderInCategory="10"
+            android:title="@string/menu_internet_save"/>
+        <item
+            android:id="@+id/menu_start_game"
+            android:orderInCategory="2"
+            android:title="@string/menu_start_game"/>
+        <item
+            android:id="@+id/menu_music"
+            android:orderInCategory="7"
+            android:title="@string/menu_music"/>
+        <item
+            android:id="@+id/menu_manga"
+            android:orderInCategory="9"
+            android:title="@string/menu_manga"/>
+        <item
+            android:id="@+id/menu_sport"
+            android:orderInCategory="8"
+            android:title="@string/menu_sport"/>
+    </group>
+</menu>

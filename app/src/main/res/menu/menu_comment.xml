@@ -1,0 +1,14 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context=".view.activity.MainActivity">
+
+    <item
+        android:id="@+id/action_add_comment"
+        android:icon="@drawable/comment_write"
+        android:orderInCategory="100"
+        android:title="评论"
+        app:showAsAction="always"
+        />
+
+</menu>

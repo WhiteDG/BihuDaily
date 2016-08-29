@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:gravity="center"
+              android:orientation="horizontal"
+              android:paddingLeft="8.0dip"
+              android:paddingRight="16.0dip">
+
+    <ImageView
+        android:id="@+id/action_item_vote_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="praise"
+        android:src="@drawable/praise"/>
+
+    <TextView
+        android:id="@+id/action_item_vote_text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/action_news_comment_default"
+        android:textColor="@color/white"/>
+</LinearLayout>

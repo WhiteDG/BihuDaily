@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#00a2ed</color><!--3F51B5-->
+    <color name="colorPrimaryDark">#00a2fa</color><!--303F9F-->
+    <color name="colorAccent">#00a2fa</color> <!--#FF4081-->
+
+    <color name="colorPrimaryNight">#ff212121</color><!--3F51B5-->
+    <color name="colorPrimaryDarkNight">#ff212121</color><!--303F9F-->
+    <color name="colorAccentNight">#ff212121</color> <!--#FF4081-->
+
+    <color name="textReader">#727272</color>
+
+    <color name="white">#ffffffff</color>
+    <color name="gray_1">#ffc0c0c0</color>
+
+    <color name="activity_background_dark">#ff343434</color>
+    <color name="activity_background_gray_dark">#ff343434</color>
+
+    <color name="list_item_bg_dark_highlight">#ff393939</color>
+    <color name="list_item_bg_dark_normal">#ff404040</color>
+    <color name="list_item_bg_light_highlight">#ffe9e9e9</color>
+    <color name="list_item_bg_light_normal">#ffffffff</color>
+</resources>

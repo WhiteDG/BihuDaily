@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="240dp"
+    android:scaleType="fitXY"
+    >
+
+    <ImageView
+        android:id="@+id/iv_top"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/image_top_default"
+        android:scaleType="fitXY"
+        android:src="@drawable/image_top_default"
+        />
+    <View
+        android:id="@+id/news_image_mask"
+        android:background="@drawable/mask"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+    <TextView
+        android:id="@+id/tv_top_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|left"
+        android:layout_marginBottom="28dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:text="TEST"
+        android:textColor="@android:color/white"
+        android:textSize="22sp"/>
+
+    <TextView
+        android:id="@+id/tv_imgSource"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="12dp"
+        android:layout_marginRight="16dp"
+        android:textSize="12sp"
+        />
+</FrameLayout>

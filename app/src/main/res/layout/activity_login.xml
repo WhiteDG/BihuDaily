@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/login_bg"
+    android:orientation="vertical"
+    tools:context="com.white.bihudaily.login.LoginActivity">
+
+    <include layout="@layout/toolbar"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="96dp"
+        android:src="@drawable/splash_logo"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="4dp"
+        android:text="使用微博登录"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="48dp"
+        android:layout_marginRight="48dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/btn_rounded_corner"
+
+        android:drawableLeft="@drawable/account_sina"
+
+        android:gravity="center"
+        android:paddingBottom="16dp"
+        android:paddingLeft="72dp"
+        android:paddingRight="72dp"
+        android:paddingTop="16dp"
+        android:text="新浪微博"
+        android:textSize="16sp"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="48dp"
+        android:layout_marginRight="48dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/btn_rounded_corner"
+        android:drawableLeft="@drawable/account_tencent"
+
+        android:gravity="center"
+        android:paddingBottom="16dp"
+        android:paddingLeft="72dp"
+        android:paddingRight="72dp"
+        android:paddingTop="16dp"
+        android:text="腾讯微博"
+        android:textSize="16sp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_margin="14dp"
+        android:layout_weight="1"
+        android:gravity="bottom"
+        android:text="逼乎日报不会未经同意通过你的微博账号发布任何消息"
+        android:textColor="@color/colorAccent"
+        android:textSize="12sp"
+        />
+</LinearLayout>

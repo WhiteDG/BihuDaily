@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BihuDaily</string>
+    <string name="action_day_mode">Day Mode</string>
+    <string name="action_night_mode">Night Mode</string>
+    <string name="action_notification">Notification</string>
+    <string name="action_settings">Settings</string>
+    <string name="load_fail">Load Fail</string>
+    <string name="menu_big_company">BigCompanyDaily</string>
+    <string name="menu_comment">Comments</string>
+    <string name="menu_design">DesignDaily</string>
+    <string name="menu_finance">FinanceDaily</string>
+    <string name="menu_internet_save">IntertSafeDaily</string>
+    <string name="menu_like">Like</string>
+    <string name="menu_liked">Liked</string>
+    <string name="menu_manga">MangaDaily</string>
+    <string name="menu_movie">MovieDaily</string>
+    <string name="menu_music">MusicDaily</string>
+    <string name="menu_no_boring">NoBoringDaily</string>
+    <string name="menu_psychology">PsychologyDaily</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_sport">SportDaily</string>
+    <string name="menu_star">Star</string>
+    <string name="menu_stared">Stared</string>
+    <string name="menu_start_game">StartGameDaily</string>
+    <string name="menu_user_recommend">UserRecommendDaily</string>
+    <string name="news_preview_image"/>
+    <string name="comment_title"> Comments</string>
+    <string name="editor_info_title">Editor Info</string>
+    <string name="editor_list_title">Editor</string>
+    <string name="get_long_comment_fail">Get Long Comments Fail</string>
+    <string name="get_short_comment_fail">Get Short Comments Fail</string>
+    <string name="index">Home</string>
+    <string name="my_star">My Star</string>
+    <string name="today_news">Today Hot News</string>
+    <string name="offline">Offline</string>
+</resources>

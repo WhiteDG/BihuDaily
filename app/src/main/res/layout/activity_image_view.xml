@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/activity_background_dark">
+
+    <include
+        android:id="@+id/toolbar_layout"
+        layout="@layout/toolbar"
+        />
+
+    <com.white.bihudaily.other.HackyViewPager
+        android:id="@+id/vp_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+    <TextView
+        android:id="@+id/tv_current_page"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="16dp"
+        android:text="1/10"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        />
+</RelativeLayout>
+
+    <!--
+    <uk.co.senab.photoview.PhotoView
+            android:id="@+id/iv_big_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            />
+
+
+        <ProgressBar
+            android:id="@+id/progress_big_image"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="10.0dip"
+            android:layout_marginRight="10.0dip"
+            android:visibility="gone"/>
+
+    -->

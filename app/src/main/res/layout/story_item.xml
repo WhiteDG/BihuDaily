@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    android:id="@+id/news_list_card_view"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="4dp"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    android:layout_marginTop="4dp"
+    card_view:cardCornerRadius="4dp"
+    card_view:cardElevation="2dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="8dp"
+        >
+
+        <FrameLayout
+            android:id="@+id/fl_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_margin="4dp">
+
+            <ImageView
+                android:id="@+id/iv_thumbnail_image"
+                android:layout_width="84dp"
+                android:layout_height="84dp"
+                android:background="@drawable/image_small_default"
+                android:contentDescription="@string/news_preview_image"/>
+
+            <ImageView
+                android:id="@+id/iv_multipic"
+                android:layout_width="46dp"
+                android:layout_height="20dp"
+                android:layout_gravity="bottom|right"
+                android:src="@drawable/home_pic"
+                />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tv_question_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_toLeftOf="@+id/fl_image"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="18sp"
+            />
+    </RelativeLayout>
+</android.support.v7.widget.CardView>
