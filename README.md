@@ -3,6 +3,8 @@
 
 软件界面高仿官方知乎日报，采用MVP架构，网络请求使用Retrofit2.0+RxJava，图片加载使用Glide
 
+部分资源文件来源于知乎日报的官方客户端，程序中所使用的所有API，都是通过破解知乎日报官方客户端得来，最终解释权归知乎所有。
+
 ## 实现功能
 
 * 闪屏页图片获取
@@ -16,22 +18,30 @@
 * 设置界面(无图模式，夜间模式，大字号，清除缓存)
 
 ## 截图
-![image](https://github.com/WhiteDG/BihuDaily/blob/master/screenshot/index.jpg)
 
-### 首页
+* 首页
 
-![image](https://github.com/WhiteDG/BihuDaily/blob/master/screenshot/content.jpg)
+![截屏][1]
 
-### 详情页
+* 详情页
 
-![image](https://github.com/WhiteDG/BihuDaily/blob/master/screenshot/comment.jpg)
+![截屏][2]
 
-### 评论
+* 评论
 
-![image](https://github.com/WhiteDG/BihuDaily/blob/master/screenshot/theme.jpg)
+![截屏][3]
 
-### 主题列表
+* 主题列表
 
-![image](https://github.com/WhiteDG/BihuDaily/blob/master/screenshot/night.jpg)
+![截屏][4]
 
-### 夜间模式
+* 夜间模式
+
+![截屏][5]
+
+
+[1]: https://github.com/WhiteDG/BihuDaily/blob/master/screenshot/index.jpg
+[2]: https://github.com/WhiteDG/BihuDaily/blob/master/screenshot/content.jpg
+[3]: https://github.com/WhiteDG/BihuDaily/blob/master/screenshot/comment.jpg
+[4]: https://github.com/WhiteDG/BihuDaily/blob/master/screenshot/theme.jpg
+[5]: https://github.com/WhiteDG/BihuDaily/blob/master/screenshot/night.jpg
