@@ -3,7 +3,10 @@
 
 软件界面高仿官方知乎日报，采用MVP架构，网络请求使用Retrofit2.0+RxJava，图片加载使用Glide
 
-部分资源文件来源于知乎日报的官方客户端，程序中所使用的所有API，都是通过破解知乎日报官方客户端得来，最终解释权归知乎所有。
+
+## 知乎API
+
+API来自 https://github.com/izzyleung/ZhihuDailyPurify/wiki/知乎日报-API-分析 
 
 ## 实现功能
 
