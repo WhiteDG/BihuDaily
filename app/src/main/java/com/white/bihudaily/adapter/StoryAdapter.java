@@ -85,15 +85,6 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     @Override
     public int getItemViewType(int position) {
         return mData.get(position).getShowType();
-//        if (getHeaderView() == null) {
-//            return mData.get(position).getShowType();
-//        } else {
-//            if (position == 0) {
-//                return TYPE_HEADER;
-//            } else {
-//                return mData.get(position - 1).getShowType();
-//            }
-//        }
     }
 
     @Override
@@ -121,7 +112,6 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
 
     public void replaceData(List<Story> stories) {
-//        mData.clear();
         mData.add(new Story("今日热闻", Story.TYPE_TITLE));
         mData.addAll(stories);
         notifyDataSetChanged();

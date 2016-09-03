@@ -1,7 +1,6 @@
 package com.white.bihudaily.data;
 
 import com.white.bihudaily.base.BaseSource;
-import com.white.bihudaily.base.BaseSubscriber;
 import com.white.bihudaily.bean.Comments;
 
 import rx.Observable;
@@ -13,11 +12,9 @@ import rx.Observable;
  */
 public interface CommentSource extends BaseSource {
 
-    void loadBeforeComment(int storyId, int lastCommentId, BaseSubscriber<Comments> subscriber);
-
+    Observable<Comments> loadBeforeComment(int storyId, int lastCommentId);
 
     Observable<Comments> loadLongComment(int storyId);
-
 
     Observable<Comments> loadShortComment(int storyId);
 }

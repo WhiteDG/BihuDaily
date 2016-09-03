@@ -15,18 +15,27 @@ import java.math.BigDecimal;
  */
 public class CacheCleanUtil {
 
-    public static String getTotalCacheSzie() {
-        long cacheSize = getFolderSize(BihuDailyApplication.appContext.getCacheDir());
+
+    /**
+     * 获取总缓存大小
+     *
+     * @return cacheDir目录下文件总大小
+     */
+    public static String getTotalCacheSize() {
+        long cacheSize = getFolderSize(BihuDailyApplication.getAppContext().getCacheDir());
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            cacheSize += getFolderSize(BihuDailyApplication.appContext.getExternalCacheDir());
+            cacheSize += getFolderSize(BihuDailyApplication.getAppContext().getExternalCacheDir());
         }
-        return Formatter.formatFileSize(BihuDailyApplication.appContext, cacheSize);
+        return Formatter.formatFileSize(BihuDailyApplication.getAppContext(), cacheSize);
     }
 
+    /**
+     * 清除所有缓存
+     */
     public static void cleanAllCache() {
-        deleteDir(BihuDailyApplication.appContext.getCacheDir());
+        deleteDir(BihuDailyApplication.getAppContext().getCacheDir());
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            deleteDir(BihuDailyApplication.appContext.getExternalCacheDir());
+            deleteDir(BihuDailyApplication.getAppContext().getExternalCacheDir());
         }
     }
 
@@ -40,9 +49,10 @@ public class CacheCleanUtil {
                 }
             }
         }
-        return cacheDir != null ? cacheDir.delete() : false;
+        return cacheDir != null && cacheDir.delete();
     }
 
+    @Deprecated
     private static String getFormatSize(long cacheSize) {
         double kiloByte = cacheSize / 1024;
         if (kiloByte < 1) {

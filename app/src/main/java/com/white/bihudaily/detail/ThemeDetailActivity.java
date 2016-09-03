@@ -8,8 +8,6 @@ import com.white.bihudaily.bean.DetailContent;
 
 public class ThemeDetailActivity extends BaseDetailActivity {
 
-
-
     @Override
     protected int getLayoutId() {
         return R.layout.activity_theme_detail;
@@ -21,7 +19,6 @@ public class ThemeDetailActivity extends BaseDetailActivity {
         mDetailContent = detailContent;
         if (detailContent.getType() == 1) {
             webContent.setWebViewClient(new WebViewClient() {
-
                 @Override
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {
                     view.loadUrl(url);

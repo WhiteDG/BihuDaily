@@ -29,6 +29,8 @@ public interface CommentContract {
         void showLoadMore(boolean active);
 
         void showBeforeComment(List<Comment> beforeCommentList);
+
+        void showNoMoreData();
     }
 
     interface Presenter extends BasePresenter {
@@ -36,6 +38,6 @@ public interface CommentContract {
 
         void loadShortComment(int storyId);
 
-        void loadBeforeComment(int storyId, int lastCommentId);
+        void loadBeforeShortComment(int storyId, int lastCommentId);
     }
 }

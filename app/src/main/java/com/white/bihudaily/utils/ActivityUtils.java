@@ -126,7 +126,7 @@ public class ActivityUtils {
         }
     }
 
-    public static void toStoryDeatilsActivity(Context context, Story story) {
+    public static void toStoryDetailActivity(Context context, Story story) {
         Intent intent = new Intent(context, DetailActivity.class);
 //        intent.putExtra(Constant.STORY_ID, storyId);
         intent.putExtra(Constant.STORY, story);
@@ -149,9 +149,9 @@ public class ActivityUtils {
         Intent intent = new Intent(context, CommentActivity.class);
         intent.putExtra(Constant.STORY_ID, storyId);
         if (storyExtra != null) {
-            intent.putExtra(Constant.COMMENTCOUNT, storyExtra.getComments());
-            intent.putExtra(Constant.LONGCOMMENTCOUNT, storyExtra.getLong_comments());
-            intent.putExtra(Constant.SHORTCOMMENTCOUNT, storyExtra.getShort_comments());
+            intent.putExtra(Constant.COMMENT_COUNT, storyExtra.getComments());
+            intent.putExtra(Constant.LONG_COMMENT_COUNT, storyExtra.getLong_comments());
+            intent.putExtra(Constant.SHORT_COMMENT_COUNT, storyExtra.getShort_comments());
         }
         context.startActivity(intent);
     }
@@ -174,8 +174,8 @@ public class ActivityUtils {
 
     public static void toImageViewActivity(Activity activity, String imgPath, List<String> imgUrlList) {
         Intent intent = new Intent(activity, ImageViewActivity.class);
-        intent.putExtra(Constant.IMGURL, imgPath);
-        intent.putExtra(Constant.IMGURL_LIST, (Serializable) imgUrlList);
+        intent.putExtra(Constant.IMG_URL, imgPath);
+        intent.putExtra(Constant.IMG_URL_LIST, (Serializable) imgUrlList);
         ActivityCompat.startActivity(activity, intent, null);
     }
 

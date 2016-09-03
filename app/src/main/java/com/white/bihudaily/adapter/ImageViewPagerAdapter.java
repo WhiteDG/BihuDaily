@@ -35,11 +35,13 @@ public class ImageViewPagerAdapter extends PagerAdapter {
         PhotoView photoView = new PhotoView(container.getContext());
         Glide.with(container.getContext())
                 .load(mUrlList.get(position))
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .fitCenter()
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .placeholder(R.drawable.default_pic_content_image_loading_light)
-//                .error(R.drawable.default_pic_content_image_download_light)
+                .dontAnimate()
+                .fitCenter()
+                .error(R.drawable.default_pic_content_image_download_light)
                 .into(photoView);
+        photoView.setZoomable(true);
         container.addView(photoView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         return photoView;
     }

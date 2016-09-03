@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -53,16 +52,15 @@ public class ImageViewActivity extends BaseWithToolbarActivity {
 
     @Override
     protected void prepareData(Intent intent) {
-        imgUrl = intent.getStringExtra(Constant.IMGURL);
-        imgUrlList = (List<String>) intent.getSerializableExtra(Constant.IMGURL_LIST);
-        Log.e("imgUrlList", imgUrlList.get(0));
-        Log.e("imgUrlList", imgUrlList.indexOf(imgUrl) + "");
+        imgUrl = intent.getStringExtra(Constant.IMG_URL);
+        imgUrlList = (List<String>) intent.getSerializableExtra(Constant.IMG_URL_LIST);
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
     protected void initView() {
         initToolbar("");
+        mToolbar.setBackgroundColor(getResources().getColor(android.R.color.transparent));
     }
 
     @Override
@@ -108,9 +106,4 @@ public class ImageViewActivity extends BaseWithToolbarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-//        mAttacher.cleanup();
-    }
 }

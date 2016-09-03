@@ -30,9 +30,6 @@ public class BasePresenterImpl<S extends BaseSource, V extends BaseView> impleme
 
     @Override
     public void unSubscribe() {
-//        if (mSource != null) {
-//            mSource.unSubscribe();
-//        }
         if (mSubscriptions != null && mSubscriptions.hasSubscriptions()) {
             mSubscriptions.unsubscribe();
             mSubscriptions.clear();

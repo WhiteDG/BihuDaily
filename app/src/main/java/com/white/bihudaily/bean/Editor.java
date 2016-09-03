@@ -1,13 +1,14 @@
 package com.white.bihudaily.bean;
 
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 /**
  * Author White
  * Date 2016/8/16
  * Time 13:28
  */
-public class Editor implements Serializable {
+public class Editor implements Parcelable {
     private String url;
     private String bio;
     private int id;
@@ -64,4 +65,41 @@ public class Editor implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.url);
+        dest.writeString(this.bio);
+        dest.writeInt(this.id);
+        dest.writeString(this.avatar);
+        dest.writeString(this.name);
+    }
+
+    public Editor() {
+    }
+
+    protected Editor(Parcel in) {
+        this.url = in.readString();
+        this.bio = in.readString();
+        this.id = in.readInt();
+        this.avatar = in.readString();
+        this.name = in.readString();
+    }
+
+    public static final Parcelable.Creator<Editor> CREATOR = new Parcelable.Creator<Editor>() {
+        @Override
+        public Editor createFromParcel(Parcel source) {
+            return new Editor(source);
+        }
+
+        @Override
+        public Editor[] newArray(int size) {
+            return new Editor[size];
+        }
+    };
 }

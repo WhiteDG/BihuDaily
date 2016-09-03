@@ -7,7 +7,7 @@ import java.util.List;
  * Date 2016/8/13
  * Time 14:55
  */
-public class DetailContent {
+public class DetailContent  {
 
     private int id;
     private int type;

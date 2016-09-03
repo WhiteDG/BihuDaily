@@ -37,7 +37,7 @@ public class EditorInfoActivity extends BaseWithToolbarActivity {
 
     @Override
     protected void prepareData(Intent intent) {
-        mEditor = (Editor) intent.getSerializableExtra(Constant.EDITOR);
+        mEditor = intent.getParcelableExtra(Constant.EDITOR);
     }
 
     @Override

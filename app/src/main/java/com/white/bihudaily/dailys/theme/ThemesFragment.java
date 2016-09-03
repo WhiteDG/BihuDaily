@@ -18,6 +18,7 @@ import com.white.bihudaily.R;
 import com.white.bihudaily.adapter.EditorAdapter;
 import com.white.bihudaily.adapter.ThemeAdapter;
 import com.white.bihudaily.base.BaseFragment;
+import com.white.bihudaily.base.BaseRVAdapter;
 import com.white.bihudaily.bean.Editor;
 import com.white.bihudaily.bean.Story;
 import com.white.bihudaily.bean.Theme;
@@ -126,6 +127,7 @@ public class ThemesFragment extends BaseFragment<ThemeContract.Presenter> implem
 
     @Override
     public void showTheme(Theme theme) {
+        mStoryAdapter.clearData();
         // 显示顶部主题日报信息（图片，标题，版权）
         this.theme = theme;
         View headerView = LayoutInflater.from(getContext()).inflate(R.layout.viewpager_item, mRvStories, false);
@@ -141,9 +143,6 @@ public class ThemesFragment extends BaseFragment<ThemeContract.Presenter> implem
         // 添加属性动画
 //        Animator animator = AnimatorInflater.loadAnimator(getContext(), R.animator.anim_daily_logo);
 //        animator.setTarget(ivTop);
-//        ObjectAnimator animator = ObjectAnimator.ofFloat(ivTop, "alpha", 1f, 0.6f, 1f);
-//        animator.setDuration(3000);
-//        animator.setRepeatCount(Integer.MAX_VALUE);
 //        animator.start();
 
         tvImgSource.setText(theme.getImage_source());
@@ -158,13 +157,13 @@ public class ThemesFragment extends BaseFragment<ThemeContract.Presenter> implem
             mStoryAdapter.addTitle(titleView);
         }
         // 添加数据
-        List<Story> stories = theme.getStories();
-        for (Story story : stories) {
-            if (story.getImages() == null || story.getImages().size() == 0) {
-                story.setShowType(Story.TYPE_NO_IMG_STORY);
-            }
-        }
-        mStoryAdapter.addDataList(stories);
+//        List<Story> stories = theme.getStories();
+//        for (Story story : stories) {
+//            if (story.getImages() == null || story.getImages().size() == 0) {
+//                story.setShowType(Story.TYPE_NO_IMG_STORY);
+//            }
+//        }
+        mStoryAdapter.addDataList(theme.getStories());
         ActivityUtils.setVisible(true, mRvStories);
     }
 
@@ -196,7 +195,7 @@ public class ThemesFragment extends BaseFragment<ThemeContract.Presenter> implem
 
     @Override
     protected void prepareData() {
-        readerList = mPresenter.getReaderList(getContext());
+//        readerList = mPresenter.getReaderList(getContext());
     }
 
     @Override
@@ -204,7 +203,7 @@ public class ThemesFragment extends BaseFragment<ThemeContract.Presenter> implem
         mRvStories.setLayoutManager(new LinearLayoutManager(getContext()));
         mRvStories.setItemAnimator(new DefaultItemAnimator());
         mRvStories.setHasFixedSize(true);
-        mStoryAdapter = new ThemeAdapter(new ArrayList<Story>(0), this, readerList);
+        mStoryAdapter = new ThemeAdapter(new ArrayList<Story>(0), this);
         mRvStories.setAdapter(mStoryAdapter);
         mSrl_stories.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
     }
@@ -214,9 +213,12 @@ public class ThemesFragment extends BaseFragment<ThemeContract.Presenter> implem
         mRvStories.addOnScrollListener(new LoadMoreScrollListener() {
             @Override
             public void onLoadMore() {
-                if (mStoryAdapter.isShowFooter()) {
+                if (mStoryAdapter.getFooterState() == BaseRVAdapter.STATE_LOADING) {
                     return;
                 }
+//                if (mStoryAdapter.isShowFooter()) {
+//                    return;
+//                }
                 // 加载更多数据
                 mPresenter.loadBeforeTheme(themeId, lastStoryId);
             }

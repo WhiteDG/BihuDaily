@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.white.bihudaily.R;
-import com.white.bihudaily.base.BaseRecyclerViewAdapter;
+import com.white.bihudaily.base.BaseRVAdapter;
 import com.white.bihudaily.bean.Story;
 import com.white.bihudaily.utils.ActivityUtils;
 import com.white.bihudaily.utils.ImageLoader;
@@ -24,36 +24,23 @@ import butterknife.ButterKnife;
  * Date 2016/8/16
  * Time 12:56
  */
-public class StoriesAdapter extends BaseRecyclerViewAdapter<Story> {
+public class StoriesAdapter extends BaseRVAdapter<Story> {
 
-    List<Integer> mReaderList;
     private Fragment mFragment;
 
-    public StoriesAdapter(List<Story> data, Fragment fragment,
-                          List<Integer> readerList) {
+    public StoriesAdapter(List<Story> data, Fragment fragment) {
         super(data);
         this.mFragment = fragment;
-        this.mReaderList = readerList;
     }
 
     @Override
-    protected RecyclerView.ViewHolder handlerOtherType(ViewGroup parent, int viewType) {
+    protected RecyclerView.ViewHolder createOtherTypeViewHolder(ViewGroup parent, int viewType) {
         if (viewType == TYPE_NO_IMG_ITEM) {
             View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.story_no_img_item, parent, false);
             return new NoImgStoryViewHolder(itemView);
         }
         return null;
     }
-
-//    @Override
-//    protected RecyclerView.ViewHolder getNoImgViewHolder(View itemView) {
-//        return new NoImgStoryViewHolder(itemView);
-//    }
-//
-//    @Override
-//    protected int getNoImgItemLayout() {
-//        return R.layout.story_no_img_item;
-//    }
 
     @Override
     protected RecyclerView.ViewHolder getTitleViewHolder(View itemView) {
@@ -88,23 +75,21 @@ public class StoriesAdapter extends BaseRecyclerViewAdapter<Story> {
             titleViewHolder.tvTitleItem.setText(story.getDate());
         } else if (holder instanceof StoryViewHolder) {
             StoryViewHolder storyViewHolder = (StoryViewHolder) holder;
-            if (mReaderList.contains(story.getId())) {
-                storyViewHolder.tvQuestionTitle.setTextColor(mFragment.getResources().getColor(R.color.textReader));
-            } else {
-                storyViewHolder.tvQuestionTitle.setTextColor(mFragment.getResources().getColor(android.R.color.primary_text_light));
-            }
+            // 改变已读状态
+            storyViewHolder.tvQuestionTitle.setTextColor(
+                    storyViewHolder.tvQuestionTitle.getResources().getColor(
+                            story.isRead() ? R.color.textReader : android.R.color.black));
+
             storyViewHolder.tvQuestionTitle.setText(story.getTitle());
             ImageLoader.display(mFragment, storyViewHolder.ivThumbnailImage, story.getImages().get(0));
-
-            ActivityUtils.setVisible(story.isMultipic(), storyViewHolder.ivMultipic);
+            // 显示多图标志
+            ActivityUtils.setVisible(story.isMultipic(), storyViewHolder.ivMultiPic);
 
         } else if (holder instanceof NoImgStoryViewHolder) {
             NoImgStoryViewHolder noImgStoryViewHolder = (NoImgStoryViewHolder) holder;
-            if (mReaderList.contains(story.getId())) {
-                noImgStoryViewHolder.tvQuestionTitle.setTextColor(mFragment.getResources().getColor(R.color.textReader));
-            } else {
-                noImgStoryViewHolder.tvQuestionTitle.setTextColor(mFragment.getResources().getColor(android.R.color.black));
-            }
+            noImgStoryViewHolder.tvQuestionTitle.setTextColor(
+                    noImgStoryViewHolder.tvQuestionTitle.getResources().getColor(
+                            story.isRead() ? R.color.textReader : android.R.color.black));
             noImgStoryViewHolder.tvQuestionTitle.setText(story.getTitle());
         }
     }
@@ -131,7 +116,7 @@ public class StoriesAdapter extends BaseRecyclerViewAdapter<Story> {
         @BindView(R.id.iv_thumbnail_image)
         ImageView ivThumbnailImage;
         @BindView(R.id.iv_multipic)
-        ImageView ivMultipic;
+        ImageView ivMultiPic;
         @BindView(R.id.tv_question_title)
         TextView tvQuestionTitle;
 

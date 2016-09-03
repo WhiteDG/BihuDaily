@@ -33,19 +33,19 @@ public class MyStarRepository extends BaseRepository implements MyStarSource {
 
     @Override
     public void removeStarStory(Context context, Story story) {
-        StarDao starDao = new StarDao(context);
+        StarDao starDao = new StarDao();
         starDao.delete(story);
     }
 
     @Override
     public List<Story> getStarList(Context context) {
-        StarDao starDao = new StarDao(context);
+        StarDao starDao = new StarDao();
         return starDao.getStarList();
     }
 
     @Override
     public List<Integer> getStarListId(Context context) {
-        StarDao starDao = new StarDao(context);
+        StarDao starDao = new StarDao();
         return starDao.getStarListId();
     }
 

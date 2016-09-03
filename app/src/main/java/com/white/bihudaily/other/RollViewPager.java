@@ -18,6 +18,7 @@ import com.white.bihudaily.R;
 import com.white.bihudaily.bean.TopStory;
 import com.white.bihudaily.utils.ImageLoader;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -130,23 +131,40 @@ public class RollViewPager extends ViewPager {
         return super.dispatchTouchEvent(ev);
     }
 
+
     public class ViewPagerTask implements Runnable {
         @Override
         public void run() {
+            Log.e("rollViewPager", "run:" + currentItem);
             currentItem = (currentItem + 1)
                     % (isShowResImage ? resImageIds.length : topStories.size());
-            handler.obtainMessage().sendToTarget();
+            if (handler != null)
+                handler.obtainMessage().sendToTarget();
         }
     }
 
+    private static class MyHandler extends Handler {
+        WeakReference<RollViewPager> mWeakReference;
 
-    private Handler handler = new Handler() {
+        public MyHandler(RollViewPager rollViewPager) {
+            mWeakReference = new WeakReference<>(rollViewPager);
+        }
+
         @Override
         public void handleMessage(Message msg) {
-            RollViewPager.this.setCurrentItem(currentItem);
-            startRoll();
+            if (msg.what == CODE_STOP) {
+                removeCallbacksAndMessages(null);
+                return;
+            }
+            RollViewPager rollViewPager = mWeakReference.get();
+            Log.e("rollViewPager", "handleMessage：" + rollViewPager.currentItem);
+            rollViewPager.setCurrentItem(rollViewPager.currentItem);
+            rollViewPager.startRoll();
+
         }
-    };
+    }
+
+    private Handler handler = new MyHandler(this);
 
 
     public RollViewPager(Context context, ArrayList<View> dots,
@@ -162,6 +180,10 @@ public class RollViewPager extends ViewPager {
         myOnTouchListener = new MyOnTouchListener();
     }
 
+
+    public List<TopStory> getTopStories() {
+        return topStories;
+    }
 
     public void setTopStories(List<TopStory> topStories) {
         isShowResImage = false;
@@ -198,7 +220,14 @@ public class RollViewPager extends ViewPager {
             adapter = new ViewPagerAdapter();
             this.setAdapter(adapter);
         }
+        Log.e("rollViewPager", "startRoll：" + currentItem);
         handler.postDelayed(viewPagerTask, 3000);
+    }
+
+    private static final int CODE_STOP = -1;
+
+    public void stopRoll() {
+        handler.sendEmptyMessage(CODE_STOP);
     }
 
     class MyOnPageChangeListener implements OnPageChangeListener {

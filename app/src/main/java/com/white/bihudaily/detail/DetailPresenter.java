@@ -67,12 +67,22 @@ public class DetailPresenter extends BasePresenterImpl<DetailSource, DetailContr
 
     @Override
     public void addStar(Context context, Story story) {
-        mSource.saveStarStory(context, story);
+        boolean b = mSource.saveStarStory(context, story);
+        if (b) {
+            mView.setStarState(true);
+        } else {
+            mView.showAddStarFail();
+        }
     }
 
     @Override
     public void removeStar(Context context, Story story) {
-        mSource.removeStarStory(context, story);
+        boolean b = mSource.removeStarStory(context, story);
+        if (b) {
+            mView.setStarState(false);
+        } else {
+            mView.showRemoveStarFail();
+        }
     }
 
     @Override

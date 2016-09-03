@@ -1,6 +1,8 @@
 package com.white.bihudaily.bean;
 
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,11 +11,8 @@ import java.util.List;
  * Date 2016/8/13
  * Time 14:46
  */
-public class Story extends AdapterBean implements Serializable {
+public class Story extends AdapterBean implements Parcelable {
 
-//    public static final int TYPE_TITLE = 1;
-//    public static final int TYPE_FOOTER = 2;
-//    public static final int TYPE_HEADER = 3;
     public static final int TYPE_STORY = 0;
     public static final int TYPE_NO_IMG_STORY = 4;
 
@@ -24,12 +23,21 @@ public class Story extends AdapterBean implements Serializable {
     private int id; // url 与 share_url 中最后的数字（应为内容的 id）
     private boolean multipic; // 消息是否包含多张图片（仅出现在包含多图的新闻中）
     private String date;
-//    private int showType;
+    private boolean isRead;
 
-    public Story(int id, String title, String image, String date, boolean multipic) {
+    public Story(int id, String title, String image, String date, boolean multipic, boolean isRead) {
 
         this(id, title, image, date);
         this.multipic = multipic;
+        this.isRead = isRead;
+    }
+
+    public boolean isRead() {
+        return isRead;
+    }
+
+    public void setRead(boolean read) {
+        isRead = read;
     }
 
     public boolean isHaveImg() {
@@ -136,4 +144,44 @@ public class Story extends AdapterBean implements Serializable {
                 ", showType=" + showType +
                 '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.title);
+        dest.writeStringList(this.images);
+        dest.writeString(this.ga_prefix);
+        dest.writeInt(this.id);
+        dest.writeByte(this.multipic ? (byte) 1 : (byte) 0);
+        dest.writeString(this.date);
+        dest.writeByte(this.haveImg ? (byte) 1 : (byte) 0);
+        dest.writeInt(this.showType);
+    }
+
+    protected Story(Parcel in) {
+        this.title = in.readString();
+        this.images = in.createStringArrayList();
+        this.ga_prefix = in.readString();
+        this.id = in.readInt();
+        this.multipic = in.readByte() != 0;
+        this.date = in.readString();
+        this.haveImg = in.readByte() != 0;
+        this.showType = in.readInt();
+    }
+
+    public static final Parcelable.Creator<Story> CREATOR = new Parcelable.Creator<Story>() {
+        @Override
+        public Story createFromParcel(Parcel source) {
+            return new Story(source);
+        }
+
+        @Override
+        public Story[] newArray(int size) {
+            return new Story[size];
+        }
+    };
 }

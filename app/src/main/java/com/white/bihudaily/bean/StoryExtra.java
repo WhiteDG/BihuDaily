@@ -1,11 +1,14 @@
 package com.white.bihudaily.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Author White
  * Date 2016/8/13
  * Time 15:02
  */
-public class StoryExtra {
+public class StoryExtra implements Parcelable {
     private int long_comments;
     private int popularity;
     private int short_comments;
@@ -42,4 +45,39 @@ public class StoryExtra {
     public void setComments(int comments) {
         this.comments = comments;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.long_comments);
+        dest.writeInt(this.popularity);
+        dest.writeInt(this.short_comments);
+        dest.writeInt(this.comments);
+    }
+
+    public StoryExtra() {
+    }
+
+    protected StoryExtra(Parcel in) {
+        this.long_comments = in.readInt();
+        this.popularity = in.readInt();
+        this.short_comments = in.readInt();
+        this.comments = in.readInt();
+    }
+
+    public static final Parcelable.Creator<StoryExtra> CREATOR = new Parcelable.Creator<StoryExtra>() {
+        @Override
+        public StoryExtra createFromParcel(Parcel source) {
+            return new StoryExtra(source);
+        }
+
+        @Override
+        public StoryExtra[] newArray(int size) {
+            return new StoryExtra[size];
+        }
+    };
 }

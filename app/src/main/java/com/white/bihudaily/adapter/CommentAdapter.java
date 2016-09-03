@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.white.bihudaily.R;
-import com.white.bihudaily.base.BaseRecyclerViewAdapter;
+import com.white.bihudaily.base.BaseRVAdapter;
 import com.white.bihudaily.bean.Comment;
 import com.white.bihudaily.bean.Story;
 import com.white.bihudaily.utils.ActivityUtils;
@@ -25,10 +25,10 @@ import butterknife.ButterKnife;
  * Date 2016/8/16
  * Time 12:56
  */
-public class CommentAdapter extends BaseRecyclerViewAdapter<Comment> {
+public class CommentAdapter extends BaseRVAdapter<Comment> {
 
+    // 用于Glide加载图片与Activity生命周期联动
     private Activity mActivity;
-
 
     public CommentAdapter(List<Comment> data, Activity activity) {
         super(data);
@@ -37,7 +37,7 @@ public class CommentAdapter extends BaseRecyclerViewAdapter<Comment> {
 
 
     @Override
-    protected RecyclerView.ViewHolder handlerOtherType(ViewGroup parent, int viewType) {
+    protected RecyclerView.ViewHolder createOtherTypeViewHolder(ViewGroup parent, int viewType) {
         if (viewType == TYPE_EMPTY_VIEW) {
             View emptyItemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.empty_comment_item, parent, false);
             return new RecyclerView.ViewHolder(emptyItemView) {
@@ -102,11 +102,6 @@ public class CommentAdapter extends BaseRecyclerViewAdapter<Comment> {
         mData.add(new Comment(TYPE_EMPTY_VIEW));
         notifyDataSetChanged();
     }
-
-//    public void addComments(List<Comment> comments) {
-//        mData.addAll(comments);
-//        notifyDataSetChanged();
-//    }
 
 
     public Comment getItem(int position) {

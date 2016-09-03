@@ -11,7 +11,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,6 +36,9 @@ public class DailyActivity extends BaseWithToolbarActivity<DailyContract.Present
 
     @BindView(R.id.nav_view)
     NavigationView navView;
+
+//    @BindView(R.id.ll_drawer)
+//    LinearLayout llDrawer;
 
     private TextView tvMyStar;
     private TextView tvOfflineDownload;
@@ -68,7 +70,7 @@ public class DailyActivity extends BaseWithToolbarActivity<DailyContract.Present
         initDrawerLayout();
     }
 
-    private void initFragment(String tag) {
+    private void initFragment(String tag, String title) {
         currentTag = tag;
         if (tag.equals(Constant.TAG_MAIN)) {
             mDailyFragment =
@@ -83,20 +85,31 @@ public class DailyActivity extends BaseWithToolbarActivity<DailyContract.Present
         } else {
             ThemesFragment themesFragment = ThemesFragment.newInstance(Integer.parseInt(tag));
             currentFragment = themesFragment;
-            switchFragment(themesFragment, tag);
+            switchFragment(themesFragment, tag, title);
         }
     }
 
     private void initDrawerLayout() {
         mDrawerLayout.setStatusBarBackground(R.color.colorPrimaryDark);
-        if (navView != null) {
-            setupDrawerContent(navView);
-        }
+//        assert navView != null;
+        setupDrawerContent(navView);
         View view = navView.getHeaderView(0);
+//        assert llDrawer != null;
+//        setupDrawerContent(llDrawer);
         tvMyStar = (TextView) view.findViewById(R.id.tv_my_star);
         tvOfflineDownload = (TextView) view.findViewById(R.id.tv_offline_download);
         llNavUser = (LinearLayout) view.findViewById(R.id.ll_nav_user);
     }
+
+//    private void setupDrawerContent(LinearLayout llDrawer) {
+//        tvMyStar = (TextView) llDrawer.findViewById(R.id.tv_my_star);
+//        tvOfflineDownload = (TextView) llDrawer.findViewById(R.id.tv_offline_download);
+//        llNavUser = (LinearLayout) llDrawer.findViewById(R.id.ll_nav_user);
+//
+//        RecyclerView rvThemeList = (RecyclerView) llDrawer.findViewById(R.id.rv_theme_list);
+//        rvThemeList.setLayoutManager(new LinearLayoutManager(this));
+//        rvThemeList.setAdapter(new ThemeListAdapter());
+//    }
 
     @Override
     protected DailyContract.Presenter createPresenter() {
@@ -128,12 +141,12 @@ public class DailyActivity extends BaseWithToolbarActivity<DailyContract.Present
             }
         });
 
-//        llNavUser.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                ActivityUtils.toLoginActivity(DailyActivity.this);
-//            }
-//        });
+        llNavUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ActivityUtils.toLoginActivity(DailyActivity.this);
+            }
+        });
     }
 
     @Override
@@ -143,9 +156,9 @@ public class DailyActivity extends BaseWithToolbarActivity<DailyContract.Present
             String title = savedInstanceState.getString(Constant.KEY_TITLE, "首页");
             setToolbarTitle(title);
             currentTag = savedInstanceState.getString(Constant.KEY_TAG, Constant.TAG_MAIN);
-            initFragment(currentTag);
+            initFragment(currentTag, title);
         } else {
-            initFragment(Constant.TAG_MAIN);
+            initFragment(Constant.TAG_MAIN, getResources().getString(R.string.index));
         }
     }
 
@@ -208,8 +221,7 @@ public class DailyActivity extends BaseWithToolbarActivity<DailyContract.Present
                                 if (mDailyFragment == null) {
                                     mDailyFragment = new DailyFragment();
                                 }
-                                switchFragment(mDailyFragment, Constant.TAG_MAIN);
-                                setToolbarTitle(R.string.index);
+                                switchFragment(mDailyFragment, Constant.TAG_MAIN, getResources().getString(R.string.index));
                                 break;
                             default:
                                 // 主题日报内容列表界面
@@ -217,8 +229,7 @@ public class DailyActivity extends BaseWithToolbarActivity<DailyContract.Present
                                 if (themesFragment == null) {
                                     themesFragment = ThemesFragment.newInstance(themeId);
                                 }
-                                switchFragment(themesFragment, themeId + "");
-                                setToolbarTitle(menuItem.getTitle().toString());
+                                switchFragment(themesFragment, themeId + "", menuItem.getTitle().toString());
                                 break;
 
                         }
@@ -247,17 +258,23 @@ public class DailyActivity extends BaseWithToolbarActivity<DailyContract.Present
 
     }
 
-    private void switchFragment(Fragment show, String tag) {
+    /**
+     * 切换fragment
+     *
+     * @param show  前台显示的fragment
+     * @param tag   fragment的tag
+     * @param title fragment的title
+     */
+    private void switchFragment(Fragment show, String tag, String title) {
         currentTag = tag;
         if (!show.isAdded()) {
-            Log.e(BihuDailyApplication.TAG, "add and show fragment");
             getSupportFragmentManager().beginTransaction().setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).
                     hide(currentFragment).add(R.id.contentFrame, show, tag).show(show).commit();
         } else {
-            Log.e(BihuDailyApplication.TAG, "show fragment");
             getSupportFragmentManager().beginTransaction().setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).
                     hide(currentFragment).show(show).commit();
         }
         currentFragment = show;
+        setToolbarTitle(title);
     }
 }

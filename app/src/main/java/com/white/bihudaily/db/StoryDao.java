@@ -1,10 +1,10 @@
 package com.white.bihudaily.db;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.white.bihudaily.app.BihuDailyApplication;
 import com.white.bihudaily.app.Constant;
 import com.white.bihudaily.bean.Story;
 import com.white.bihudaily.bean.TopStory;
@@ -22,8 +22,8 @@ public class StoryDao {
 
     private BihuDBHelper mBihuDBHelper;
 
-    public StoryDao(Context context) {
-        mBihuDBHelper = new BihuDBHelper(context);
+    public StoryDao() {
+        mBihuDBHelper = new BihuDBHelper(BihuDailyApplication.getAppContext());
     }
 
     public List<TopStory> getTopStoryList() {
@@ -42,7 +42,7 @@ public class StoryDao {
             }
             return stories;
         } catch (Exception e) {
-
+            e.printStackTrace();
         } finally {
             if (query != null) {
                 query.close();
@@ -58,19 +58,20 @@ public class StoryDao {
         Cursor query = null;
         try {
             query = database.query(Constant.TABLE_STORY,
-                    new String[]{Constant.ID, Constant.TITLE, Constant.IMAGE, Constant.DATE, Constant.TOP, Constant.MULTIPIC},
+                    new String[]{Constant.ID, Constant.TITLE, Constant.IMAGE, Constant.DATE, Constant.TOP, Constant.MULTI_PIC, Constant.READ},
                     " top=? ", new String[]{"0"}, null, null, null);
             while (query.moveToNext()) {
                 int id = query.getInt(query.getColumnIndex(Constant.ID));
                 String title = query.getString(query.getColumnIndex(Constant.TITLE));
                 String image = query.getString(query.getColumnIndex(Constant.IMAGE));
                 String date = query.getString(query.getColumnIndex(Constant.DATE));
-                int multipic = query.getInt(query.getColumnIndex(Constant.MULTIPIC));
-                stories.add(new Story(id, title, image, date, multipic == 1));
+                int multiPic = query.getInt(query.getColumnIndex(Constant.MULTI_PIC));
+                int read = query.getInt(query.getColumnIndex(Constant.READ));
+                stories.add(new Story(id, title, image, date, multiPic == 1, read == 1));
             }
             return stories;
         } catch (Exception e) {
-
+            e.printStackTrace();
         } finally {
             if (query != null) {
                 query.close();
@@ -103,7 +104,8 @@ public class StoryDao {
                 contentValues.put(Constant.IMAGE, story.getImages().get(0));
                 contentValues.put(Constant.DATE, story.getDate());
                 contentValues.put(Constant.TOP, 0);
-                contentValues.put(Constant.MULTIPIC, story.isMultipic() ? 1 : 0);
+                contentValues.put(Constant.MULTI_PIC, story.isMultipic() ? 1 : 0);
+                contentValues.put(Constant.READ, story.isRead() ? 1 : 0);
                 long insert = database.insert(Constant.TABLE_STORY, null, contentValues);
                 if (insert <= 0) {// 出现错误
                     database.endTransaction();
@@ -112,6 +114,7 @@ public class StoryDao {
             database.setTransactionSuccessful();
 
         } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             database.endTransaction();
             database.close();

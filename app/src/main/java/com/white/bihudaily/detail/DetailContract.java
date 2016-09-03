@@ -26,6 +26,12 @@ public interface DetailContract {
         void showDetail(DetailContent detailContent);
 
         void showStoryExtra(StoryExtra storyExtra);
+
+        void setStarState(boolean isStar);
+
+        void showAddStarFail();
+
+        void showRemoveStarFail();
     }
 
     interface Presenter extends BasePresenter {

@@ -22,8 +22,12 @@ public class BihuDailyApplication extends Application {
 
     public static final String TAG = "BihuDaily";
     private static List<Activity> activityList;
-    public static Context appContext;
+    private static Context appContext;
 
+
+    public static Context getAppContext() {
+        return appContext;
+    }
 
     @Override
     public void onCreate() {
@@ -34,14 +38,11 @@ public class BihuDailyApplication extends Application {
         if (isNightMode) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }
-
+        activityList = new ArrayList<>();
     }
 
 
     public static void addActivity(Activity activity) {
-        if (activityList == null) {
-            activityList = new ArrayList<>();
-        }
         if (!activityList.contains(activity)) {
             activityList.add(activity);
         }

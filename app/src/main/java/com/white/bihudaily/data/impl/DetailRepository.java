@@ -23,20 +23,20 @@ public class DetailRepository extends BaseRepository implements DetailSource {
 
 
     @Override
-    public void saveStarStory(Context context, Story story) {
-        StarDao starDao = new StarDao(context);
-        starDao.save(story);
+    public boolean saveStarStory(Context context, Story story) {
+        StarDao starDao = new StarDao();
+        return starDao.save(story);
     }
 
     @Override
-    public void removeStarStory(Context context, Story story) {
-        StarDao starDao = new StarDao(context);
-        starDao.delete(story);
+    public boolean removeStarStory(Context context, Story story) {
+        StarDao starDao = new StarDao();
+        return starDao.delete(story);
     }
 
     @Override
     public List<Story> getStarList(Context context) {
-        StarDao starDao = new StarDao(context);
+        StarDao starDao = new StarDao();
         return starDao.getStarList();
     }
 
@@ -54,7 +54,7 @@ public class DetailRepository extends BaseRepository implements DetailSource {
 
     @Override
     public List<Integer> getStarListId(Context context) {
-        StarDao starDao = new StarDao(context);
+        StarDao starDao = new StarDao();
         return starDao.getStarListId();
     }
 
@@ -63,7 +63,6 @@ public class DetailRepository extends BaseRepository implements DetailSource {
         LikeDao likeDao = new LikeDao(context);
         return likeDao.getLikeListId();
     }
-
 
 
     @Override

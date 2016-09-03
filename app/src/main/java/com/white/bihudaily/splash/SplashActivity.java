@@ -26,7 +26,7 @@ import java.io.File;
 
 import butterknife.BindView;
 
-public class SplashActivity extends BaseActivity<SplachContract.Presenter> implements SplachContract.View {
+public class SplashActivity extends BaseActivity<SplashContract.Presenter> implements SplashContract.View {
 
     @BindView(R.id.iv_start)
     ImageView ivStart;
@@ -71,7 +71,7 @@ public class SplashActivity extends BaseActivity<SplachContract.Presenter> imple
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                turn2DailysActivity();
+                turn2DailyActivity();
             }
 
             @Override
@@ -84,12 +84,10 @@ public class SplashActivity extends BaseActivity<SplachContract.Presenter> imple
     @Override
     protected void initData(Bundle savedInstanceState) {
         mPresenter.showImg(this);
-
-
     }
 
     @Override
-    protected SplachContract.Presenter createPresenter() {
+    protected SplashContract.Presenter createPresenter() {
         return new SplashPresenter(new SplashRepository(), this);
     }
 
@@ -116,7 +114,7 @@ public class SplashActivity extends BaseActivity<SplachContract.Presenter> imple
 
 
     @Override
-    public void turn2DailysActivity() {
+    public void turn2DailyActivity() {
         ActivityUtils.toDailysActivity(SplashActivity.this);
         finish();
     }
@@ -129,18 +127,17 @@ public class SplashActivity extends BaseActivity<SplachContract.Presenter> imple
                     @Override
                     public void onResourceReady(File resource, GlideAnimation<? super File> glideAnimation) {
                         //缓存版权信息
-                        SPUtils.put(SplashActivity.this, Constant.KEY_STARTIMGTEXT, startImg.getText());
+                        SPUtils.put(SplashActivity.this, Constant.KEY_START_IMG_TEXT, startImg.getText());
                         //保存当前日期
                         SPUtils.put(getApplicationContext(), Constant.KEY_TODAY, CommonUtil.getToday());
                         // 缓存图片
-                        SPUtils.put(SplashActivity.this, Constant.KEY_STARTIMGPATH, resource.getAbsolutePath());
+                        SPUtils.put(SplashActivity.this, Constant.KEY_START_IMG_PATH, resource.getAbsolutePath());
                     }
                 });
     }
 
-
     @Override
-    public void setPresenter(SplachContract.Presenter presenter) {
+    public void setPresenter(SplashContract.Presenter presenter) {
         this.mPresenter = presenter;
     }
 }

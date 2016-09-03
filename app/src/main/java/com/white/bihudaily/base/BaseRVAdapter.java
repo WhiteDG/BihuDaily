@@ -1,5 +1,6 @@
 package com.white.bihudaily.base;
 
+import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,8 +21,10 @@ import butterknife.ButterKnife;
  * Date 2016/8/16
  * Time 11:50
  */
-public abstract class BaseRecyclerViewAdapter<T extends AdapterBean> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public abstract class BaseRVAdapter<T extends AdapterBean> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+
+    // 数据源
     protected List<T> mData;
 
     protected View mHeaderView;
@@ -33,9 +36,13 @@ public abstract class BaseRecyclerViewAdapter<T extends AdapterBean> extends Rec
     protected static final int TYPE_NO_IMG_ITEM = 4;
     protected static final int TYPE_EMPTY_VIEW = 5;
 
-    public BaseRecyclerViewAdapter(List<T> data) {
-        this.mData = data;
+    private int mFooterState;
+    public static final int STATE_LOADING = -1;
+    public static final int STATE_NO_MORE = -2;
+    public static final int STATE_NO_FOOTER = -3;
 
+    public BaseRVAdapter(List<T> data) {
+        this.mData = data;
     }
 
     public View getHeaderView() {
@@ -43,15 +50,15 @@ public abstract class BaseRecyclerViewAdapter<T extends AdapterBean> extends Rec
     }
 
     public void setHeaderView(View headerView) {
-        mData.clear();
+//        mData.clear();
         T headerBean = createBean(AdapterBean.TYPE_HEADER);
-        mData.add(headerBean);
+        mData.add(0, headerBean);
         mHeaderView = headerView;
         notifyItemInserted(0);
     }
 
     /**
-     * 创建一个header 或 footer bean
+     * 通过反射创建一个header 或 footer bean
      *
      * @param type header footer
      * @return
@@ -85,12 +92,12 @@ public abstract class BaseRecyclerViewAdapter<T extends AdapterBean> extends Rec
         } else if (viewType == TYPE_HEADER) {
             return new HeaderViewHolder(mHeaderView);
         } else {
-            return handlerOtherType(parent, viewType);
+            return createOtherTypeViewHolder(parent, viewType);
         }
 
     }
 
-    protected abstract RecyclerView.ViewHolder handlerOtherType(ViewGroup parent, int viewType);
+    protected abstract RecyclerView.ViewHolder createOtherTypeViewHolder(ViewGroup parent, int viewType);
 
     protected abstract RecyclerView.ViewHolder getTitleViewHolder(View itemView);
 
@@ -116,6 +123,7 @@ public abstract class BaseRecyclerViewAdapter<T extends AdapterBean> extends Rec
     public void addFooter() {
         T footerBean = createBean(AdapterBean.TYPE_FOOTER);
         mData.add(footerBean);
+        setFooterState(STATE_LOADING);
         notifyDataSetChanged();
     }
 
@@ -127,6 +135,7 @@ public abstract class BaseRecyclerViewAdapter<T extends AdapterBean> extends Rec
         int itemViewType = getItemViewType(lastPosition);
         if (itemViewType == TYPE_FOOTER) {
             mData.remove(lastPosition);
+            setFooterState(STATE_NO_FOOTER);
             notifyDataSetChanged();
         }
     }
@@ -136,9 +145,16 @@ public abstract class BaseRecyclerViewAdapter<T extends AdapterBean> extends Rec
      *
      * @return true：正在加载
      */
-    public boolean isShowFooter() {
-        int lastPosition = mData.size() - 1;
-        return getItemViewType(lastPosition) == TYPE_FOOTER;
+//    public boolean isShowFooter() {
+//        int lastPosition = mData.size() - 1;
+//        return getItemViewType(lastPosition) == TYPE_FOOTER;
+//    }
+    public int getFooterState() {
+        return mFooterState;
+    }
+
+    public void setFooterState(int footerState) {
+        this.mFooterState = footerState;
     }
 
     /**
@@ -157,6 +173,7 @@ public abstract class BaseRecyclerViewAdapter<T extends AdapterBean> extends Rec
      * @param data
      */
     public void replaceData(List<T> data) {
+        mData.clear();
         mData.addAll(data);
         notifyDataSetChanged();
     }
@@ -166,6 +183,7 @@ public abstract class BaseRecyclerViewAdapter<T extends AdapterBean> extends Rec
      */
     public void clearData() {
         mData.clear();
+        mHeaderView = null;
         notifyDataSetChanged();
     }
 
@@ -176,10 +194,13 @@ public abstract class BaseRecyclerViewAdapter<T extends AdapterBean> extends Rec
         return getItemType(position);
     }
 
-    class FooterViewHolder extends RecyclerView.ViewHolder {
+
+    public class FooterViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.tv_loading)
         TextView tvLoadingItem;
+        @BindView(R.id.progressBar)
+        ContentLoadingProgressBar progressBar;
 
         public FooterViewHolder(View itemView) {
             super(itemView);
@@ -187,7 +208,7 @@ public abstract class BaseRecyclerViewAdapter<T extends AdapterBean> extends Rec
         }
     }
 
-    class HeaderViewHolder extends RecyclerView.ViewHolder {
+    public class HeaderViewHolder extends RecyclerView.ViewHolder {
 
         public HeaderViewHolder(View itemView) {
             super(itemView);

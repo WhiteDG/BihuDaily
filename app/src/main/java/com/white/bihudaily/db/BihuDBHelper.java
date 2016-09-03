@@ -28,8 +28,9 @@ public class BihuDBHelper extends SQLiteOpenHelper {
                 + Constant.TITLE + " text,"
                 + Constant.IMAGE + " text,"
                 + Constant.DATE + " text,"
-                + Constant.MULTIPIC + " int,"
-                + Constant.TOP + " int"
+                + Constant.MULTI_PIC + " int,"
+                + Constant.TOP + " int,"
+                + Constant.READ + " int"
                 + ")";
         String createReader = "CREATE TABLE "
                 + Constant.TABLE_READER
@@ -50,7 +51,7 @@ public class BihuDBHelper extends SQLiteOpenHelper {
                 + Constant.ID + " int,"
                 + Constant.TITLE + " text,"
                 + Constant.IMAGE + " text,"
-                + Constant.MULTIPIC + " int"
+                + Constant.MULTI_PIC + " int"
                 + ")";
         sqLiteDatabase.execSQL(createStory);
         sqLiteDatabase.execSQL(createReader);

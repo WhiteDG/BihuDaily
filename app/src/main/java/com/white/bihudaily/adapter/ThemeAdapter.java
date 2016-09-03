@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.white.bihudaily.R;
-import com.white.bihudaily.base.BaseRecyclerViewAdapter;
+import com.white.bihudaily.base.BaseRVAdapter;
 import com.white.bihudaily.bean.Story;
 import com.white.bihudaily.utils.ActivityUtils;
 import com.white.bihudaily.utils.ImageLoader;
@@ -26,28 +26,24 @@ import butterknife.ButterKnife;
  * Date 2016/8/16
  * Time 12:56
  */
-public class ThemeAdapter extends BaseRecyclerViewAdapter<Story> {
+public class ThemeAdapter extends BaseRVAdapter<Story> {
 
-    List<Integer> mReaderList;
     private Fragment mFragment;
     private Activity mActivity;
-    private View titleView;
+    private View mTitleView;
 
-    public ThemeAdapter(List<Story> data, Fragment fragment,
-                        List<Integer> readerList) {
+    public ThemeAdapter(List<Story> data, Fragment fragment) {
         super(data);
         this.mFragment = fragment;
-        this.mReaderList = readerList;
     }
 
-    public ThemeAdapter(ArrayList<Story> data, Activity activity, List<Integer> readerList) {
+    public ThemeAdapter(ArrayList<Story> data, Activity activity) {
         super(data);
         this.mActivity = activity;
-        this.mReaderList = readerList;
     }
 
     @Override
-    protected RecyclerView.ViewHolder handlerOtherType(ViewGroup parent, int viewType) {
+    protected RecyclerView.ViewHolder createOtherTypeViewHolder(ViewGroup parent, int viewType) {
         if (viewType == TYPE_NO_IMG_ITEM) {
             View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.story_no_img_item, parent, false);
             return new NoImgStoryViewHolder(itemView);
@@ -55,19 +51,9 @@ public class ThemeAdapter extends BaseRecyclerViewAdapter<Story> {
         return null;
     }
 
-//    @Override
-//    protected RecyclerView.ViewHolder getNoImgViewHolder(View itemView) {
-//        return new NoImgStoryViewHolder(itemView);
-//    }
-//
-//    @Override
-//    protected int getNoImgItemLayout() {
-//        return R.layout.story_no_img_item;
-//    }
-
     @Override
     protected RecyclerView.ViewHolder getTitleViewHolder(View itemView) {
-        return new TitleViewHolder(titleView);
+        return new TitleViewHolder(mTitleView);
     }
 
     @Override
@@ -93,92 +79,34 @@ public class ThemeAdapter extends BaseRecyclerViewAdapter<Story> {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         Story story = mData.get(position);
-        if (holder instanceof TitleViewHolder) {
-//            TitleViewHolder titleViewHolder = (TitleViewHolder) holder;
-//            titleViewHolder.tvTitleItem.setText(story.getDate());
-        } else if (holder instanceof StoryViewHolder) {
+        if (holder instanceof StoryViewHolder) {
             StoryViewHolder storyViewHolder = (StoryViewHolder) holder;
-            setReader(storyViewHolder.tvQuestionTitle, story.getId());
+            storyViewHolder.tvQuestionTitle.setTextColor(
+                    storyViewHolder.tvQuestionTitle.getResources().getColor(
+                            story.isRead() ? R.color.textReader : android.R.color.black));
             storyViewHolder.tvQuestionTitle.setText(story.getTitle());
-            if (story.getImages() != null && story.getImages().size() != 0) {
-                if (mFragment == null) {
-                    ImageLoader.display(mActivity, storyViewHolder.ivThumbnailImage, story.getImages().get(0));
-                } else {
-                    ImageLoader.display(mFragment, storyViewHolder.ivThumbnailImage, story.getImages().get(0));
-                }
-                ActivityUtils.setVisible(story.isMultipic(), storyViewHolder.ivMultipic);
+            if (mFragment == null) {
+                ImageLoader.display(mActivity, storyViewHolder.ivThumbnailImage, story.getImages().get(0));
+            } else {
+                ImageLoader.display(mFragment, storyViewHolder.ivThumbnailImage, story.getImages().get(0));
             }
+            ActivityUtils.setVisible(story.isMultipic(), storyViewHolder.ivMultiPic);
+
         } else if (holder instanceof NoImgStoryViewHolder) {
             NoImgStoryViewHolder noImgStoryViewHolder = (NoImgStoryViewHolder) holder;
-
-            setReader(noImgStoryViewHolder.tvQuestionTitle, story.getId());
+            noImgStoryViewHolder.tvQuestionTitle.setTextColor(
+                    noImgStoryViewHolder.tvQuestionTitle.getResources().getColor(
+                            story.isRead() ? R.color.textReader : android.R.color.black));
             noImgStoryViewHolder.tvQuestionTitle.setText(story.getTitle());
-
         }
     }
 
-    private void setReader(TextView tvQuestionTitle, int storyId) {
-        int color;
-        if (mReaderList.contains(storyId)) {
-            if (mFragment == null) {
-                color = mActivity.getResources().getColor(R.color.textReader);
-            } else {
-                color = mFragment.getResources().getColor(R.color.textReader);
-            }
-            tvQuestionTitle.setTextColor(color);
-        } else {
-            if (mFragment == null) {
-                color = mActivity.getResources().getColor(android.R.color.black);
-            } else {
-                color = mFragment.getResources().getColor(android.R.color.black);
-            }
-            tvQuestionTitle.setTextColor(color);
-        }
-    }
-
-//    public void replaceData(List<Story> stories) {
-//        mData.addAll(stories);
-//        notifyDataSetChanged();
-//    }
 
     public void addTitle(View titleView) {
-        this.titleView = titleView;
+        this.mTitleView = titleView;
         mData.add(new Story(Story.TYPE_TITLE));
         notifyDataSetChanged();
     }
-
-//    public void addStories(List<Story> stories) {
-//        mData.addAll(stories);
-//        notifyDataSetChanged();
-//    }
-
-//    public void addFooter() {
-//        mData.add(new Story(Story.TYPE_FOOTER));
-//        notifyDataSetChanged();
-//    }
-//
-//    public boolean isShowFooter() {
-//        int lastPosition = mData.size() - 1;
-//        return getItemViewType(lastPosition) == TYPE_FOOTER;
-//    }
-//
-//    public void removerFooter() {
-//        int lastPosition = mData.size() - 1;
-//        int itemViewType = getItemViewType(lastPosition);
-//        if (itemViewType == TYPE_FOOTER) {
-//            mData.remove(lastPosition);
-//            notifyDataSetChanged();
-//        }
-//    }
-
-//    public Story getItem(int position) {
-//        return mData.get(position);
-//    }
-
-//    public void clearData() {
-//        mData.clear();
-//        notifyDataSetChanged();
-//    }
 
 
     class TitleViewHolder extends RecyclerView.ViewHolder {
@@ -197,7 +125,7 @@ public class ThemeAdapter extends BaseRecyclerViewAdapter<Story> {
         @BindView(R.id.iv_thumbnail_image)
         ImageView ivThumbnailImage;
         @BindView(R.id.iv_multipic)
-        ImageView ivMultipic;
+        ImageView ivMultiPic;
         @BindView(R.id.tv_question_title)
         TextView tvQuestionTitle;
 

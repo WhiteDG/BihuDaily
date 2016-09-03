@@ -6,5 +6,5 @@ package com.white.bihudaily.base;
  * Time 12:28
  */
 public interface BaseSource {
-//    void unSubscribe();
+
 }

@@ -18,9 +18,9 @@ import rx.Observable;
  */
 public interface DetailSource extends BaseSource {
 
-    void saveStarStory(Context context, Story story);
+    boolean saveStarStory(Context context, Story story);
 
-    void removeStarStory(Context context, Story story);
+    boolean removeStarStory(Context context, Story story);
 
     List<Story> getStarList(Context context);
 

@@ -26,9 +26,10 @@ public class ThemePresenter extends BasePresenterImpl<ThemeSource, ThemeContract
     }
 
     @Override
-    public void loadTheme(int id, Context context) {
+    public void loadTheme(int id, final Context context) {
         mView.setRefreshLoadingIndicator(true);
-        Subscription subscription = mSource.loadTheme(id).compose(TransformUtils.<Theme>defaultSchedulers())
+        Subscription subscription = mSource.loadTheme(id)
+                .compose(TransformUtils.<Theme>defaultSchedulers())
                 .subscribe(new BaseSubscriber<Theme>() {
                     @Override
                     protected void onFailure(Throwable e) {
@@ -45,8 +46,6 @@ public class ThemePresenter extends BasePresenterImpl<ThemeSource, ThemeContract
                     }
                 });
         mSubscriptions.add(subscription);
-
-
     }
 
     @Override

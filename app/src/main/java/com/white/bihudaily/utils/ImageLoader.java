@@ -9,8 +9,14 @@ import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.bumptech.glide.request.target.Target;
+import com.white.bihudaily.app.BihuDailyApplication;
+
+import java.io.File;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Author White
@@ -19,36 +25,53 @@ import com.bumptech.glide.request.target.BitmapImageViewTarget;
  */
 public class ImageLoader {
 
-
-    public static void display(Activity activity, ImageView imageView, String url) {
-        Glide.with(activity).load(url).fitCenter().centerCrop()
+    private static void loadImg(RequestManager requestManager, String url, ImageView imageView) {
+        requestManager.load(url).fitCenter().centerCrop()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(imageView);
     }
 
-    public static void displayCircularImg(final Activity activity, final ImageView imageView, String url) {
-        Glide.with(activity).load(url).asBitmap().fitCenter().centerCrop()
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
+    private static void loadCircularImg(RequestManager requestManager, String url, final ImageView imageView) {
+        requestManager.load(url).asBitmap().fitCenter().centerCrop()
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .into(new BitmapImageViewTarget(imageView) {
                     @Override
                     protected void setResource(Bitmap resource) {
                         RoundedBitmapDrawable circularBitmapDrawable =
-                                RoundedBitmapDrawableFactory.create(activity.getResources(), resource);
+                                RoundedBitmapDrawableFactory.create(imageView.getResources(), resource);
                         circularBitmapDrawable.setCircular(true);
                         imageView.setImageDrawable(circularBitmapDrawable);
                     }
                 });
     }
 
+    public static void display(Activity activity, ImageView imageView, String url) {
+        loadImg(Glide.with(activity), url, imageView);
+    }
+
+    public static void displayCircularImg(Fragment fragment, ImageView imageView, String url) {
+        loadCircularImg(Glide.with(fragment), url, imageView);
+    }
+
+    public static void displayCircularImg(Activity activity, ImageView imageView, String url) {
+        loadCircularImg(Glide.with(activity), url, imageView);
+    }
+
     public static void display(Fragment fragment, ImageView imageView, String url) {
-        Glide.with(fragment).load(url).fitCenter().centerCrop()
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(imageView);
+        loadImg(Glide.with(fragment), url, imageView);
     }
 
     public static void display(Context context, ImageView imageView, String url) {
-        Glide.with(context).load(url).fitCenter().centerCrop()
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(imageView);
+        loadImg(Glide.with(context), url, imageView);
+    }
+
+    public static void downloadImg(String url) {
+        try {
+            File img = Glide.with(BihuDailyApplication.getAppContext()).load(url)
+                    .downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                    .get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
     }
 }

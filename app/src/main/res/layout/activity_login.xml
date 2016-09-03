@@ -23,48 +23,21 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="4dp"
-        android:text="使用微博登录"
+        android:text="@string/login_by_mb"
         android:textColor="@android:color/white"
         android:textSize="18sp"
         />
 
     <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="48dp"
-        android:layout_marginRight="48dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/btn_rounded_corner"
-
+        style="@style/LoginButtonStyle"
         android:drawableLeft="@drawable/account_sina"
-
-        android:gravity="center"
-        android:paddingBottom="16dp"
-        android:paddingLeft="72dp"
-        android:paddingRight="72dp"
-        android:paddingTop="16dp"
-        android:text="新浪微博"
-        android:textSize="16sp"
+        android:text="@string/sina"
         />
 
     <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginLeft="48dp"
-        android:layout_marginRight="48dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/btn_rounded_corner"
+        style="@style/LoginButtonStyle"
         android:drawableLeft="@drawable/account_tencent"
-
-        android:gravity="center"
-        android:paddingBottom="16dp"
-        android:paddingLeft="72dp"
-        android:paddingRight="72dp"
-        android:paddingTop="16dp"
-        android:text="腾讯微博"
-        android:textSize="16sp"
+        android:text="@string/tencent"
         />
 
     <TextView
@@ -74,7 +47,7 @@
         android:layout_margin="14dp"
         android:layout_weight="1"
         android:gravity="bottom"
-        android:text="逼乎日报不会未经同意通过你的微博账号发布任何消息"
+        android:text="@string/bottom_tips"
         android:textColor="@color/colorAccent"
         android:textSize="12sp"
         />

@@ -7,10 +7,9 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.white.bihudaily.R;
 import com.white.bihudaily.bean.DetailContent;
+import com.white.bihudaily.utils.ImageLoader;
 
 import butterknife.BindView;
 
@@ -53,9 +52,10 @@ public class DetailActivity extends BaseDetailActivity {
             ivDetailTop.setImageResource(R.drawable.splash);
         } else {
             tvImgSource.setText(detailContent.getImage_source());
-            Glide.with(DetailActivity.this).load(detailContent.getImage()).centerCrop().fitCenter()
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(ivDetailTop);
+//            Glide.with(DetailActivity.this).load(detailContent.getImage()).centerCrop().fitCenter()
+//                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+//                    .into(ivDetailTop);
+            ImageLoader.display(DetailActivity.this, ivDetailTop, detailContent.getImage());
 
         }
     }

@@ -1,20 +1,15 @@
 package com.white.bihudaily.adapter;
 
-import android.graphics.Bitmap;
 import android.support.v4.app.Fragment;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.white.bihudaily.R;
 import com.white.bihudaily.bean.Editor;
+import com.white.bihudaily.utils.ImageLoader;
 
 import java.util.List;
 
@@ -29,11 +24,11 @@ import butterknife.ButterKnife;
 public class EditorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<Editor> mEditors;
-    private Fragment mContext;
+    private Fragment mFragment;
 
-    public EditorAdapter(Fragment context, List<Editor> editors) {
+    public EditorAdapter(Fragment fragment, List<Editor> editors) {
         this.mEditors = editors;
-        this.mContext = context;
+        this.mFragment = fragment;
     }
 
     @Override
@@ -47,17 +42,7 @@ public class EditorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         final Editor editor = mEditors.get(position);
         if (holder instanceof EditorViewHolder) {
             final EditorViewHolder editorViewHolder = (EditorViewHolder) holder;
-            Glide.with(mContext).load(editor.getAvatar()).asBitmap().fitCenter().centerCrop()
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(new BitmapImageViewTarget(editorViewHolder.ivEditorImage) {
-                        @Override
-                        protected void setResource(Bitmap resource) {
-                            RoundedBitmapDrawable circularBitmapDrawable =
-                                    RoundedBitmapDrawableFactory.create(mContext.getResources(), resource);
-                            circularBitmapDrawable.setCircular(true);
-                            editorViewHolder.ivEditorImage.setImageDrawable(circularBitmapDrawable);
-                        }
-                    });
+            ImageLoader.displayCircularImg(mFragment, editorViewHolder.ivEditorImage, editor.getAvatar());
         }
     }
 

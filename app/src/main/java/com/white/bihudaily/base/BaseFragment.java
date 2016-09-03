@@ -41,7 +41,6 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment {
 
     protected abstract P createPresenter();
 
-    @SuppressWarnings("deprecation")
     protected void changeReadState(View clickedView, int textViewId) {
         TextView tvTitle = (TextView) clickedView.findViewById(textViewId);//R.id.tv_question_title
         tvTitle.setTextColor(getResources().getColor(R.color.textReader));

@@ -6,7 +6,7 @@
     <string name="get_long_comment_fail">获取长评论列表失败</string>
     <string name="get_short_comment_fail">获取短评论列表失败</string>
 
-    <string name="comment_title"> 条点评</string>
+    <string name="comment_title">" 条点评"</string>
     <string name="editor_list_title">主编</string>
     <string name="editor_info_title">主编资料</string>
 
@@ -48,5 +48,28 @@
 
     <string name="action_news_comment_default">…</string>
     <string name="action_news_like_default">…</string>
+    <string name="no_more_comment">没有更多评论了</string>
+    <string name="long_comment_title">" 条长评"</string>
+    <string name="short_comment_title">" 条短评"</string>
+    <string name="loading">努力加载中</string>
+
+    <!--设置界面-->
+    <string name="title_normal">常规</string>
+    <string name="summary_no_load_img">移动网络下不加载图片</string>
+    <string name="title_no_load_img">无图模式</string>
+    <string name="title_big_font">大字号</string>
+    <string name="title_other">其他</string>
+    <string name="title_clear_cache">清除缓存</string>
+    <string name="title_notice">声明</string>
+    <string name="title_developer">开发者</string>
+    <string name="key_clear_cache">clear_cache</string>
+    <string name="key_notice">notice</string>
+    <string name="key_developer">developer</string>
+    <string name="dialog_cancel">取消</string>
+    <string name="toast_clear_cache">缓存已清除</string>
+    <string name="login_by_mb">使用微博登录</string>
+    <string name="sina">新浪微博</string>
+    <string name="tencent">腾讯微博</string>
+    <string name="bottom_tips">逼乎日报不会未经同意通过你的微博账号发布任何消息</string>
 
 </resources>

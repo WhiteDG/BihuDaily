@@ -15,6 +15,6 @@ import rx.Observable;
 public class SplashRepository extends BaseRepository implements SplashSource {
     @Override
     public Observable<StartImg> loadImg() {
-        return BihuClient.getBihuApi().getStartImg();
+        return BihuClient.getBihuService().getStartImg();
     }
 }

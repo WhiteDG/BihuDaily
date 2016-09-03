@@ -18,5 +18,6 @@ public class SplashService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         // 后台下载图片
+
     }
 }

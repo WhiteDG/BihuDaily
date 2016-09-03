@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -77,6 +78,10 @@ public abstract class BaseDetailActivity extends BaseWithToolbarActivity<DetailC
 
     protected List<String> imgUrlList;
 
+    protected MenuItem starMenuItem;
+    protected MenuItem likeMenuItem;
+
+
     @Override
     protected DetailContract.Presenter createPresenter() {
         return new DetailPresenter(new DetailRepository(), this);
@@ -89,10 +94,10 @@ public abstract class BaseDetailActivity extends BaseWithToolbarActivity<DetailC
 
     @Override
     protected void prepareData(Intent intent) {
-        mStory = (Story) intent.getSerializableExtra(Constant.STORY);
+        mStory = intent.getParcelableExtra(Constant.STORY);
     }
 
-    @SuppressLint("AddJavascriptInterface")
+    @SuppressLint({"AddJavascriptInterface", "SetJavaScriptEnabled"})
     @Override
     protected void initView() {
 
@@ -123,10 +128,8 @@ public abstract class BaseDetailActivity extends BaseWithToolbarActivity<DetailC
 
     @Override
     protected void initData(Bundle savedInstanceState) {
-//        mPresenter = new DetailPresenter(new DailyRepository(), this);
         mPresenter.loadDetailContent(mStory.getId());
         mPresenter.loadStoryExtra(mStory.getId());
-
     }
 
     @Override
@@ -148,19 +151,35 @@ public abstract class BaseDetailActivity extends BaseWithToolbarActivity<DetailC
     @Override
     public void showStoryExtra(StoryExtra storyExtra) {
         this.storyExtra = storyExtra;
-        commentText.setText(storyExtra.getComments() + "");
-        likeText.setText(storyExtra.getPopularity() + "");
+
+        commentText.setText(formatNum(storyExtra.getComments()));
+        likeText.setText(formatNum(storyExtra.getPopularity()));
+    }
+
+    private String formatNum(int num) {
+        if (num < 1000) {
+            return num + "";
+        }
+        String temp = (num / 1000) + "";
+        if (temp.length() > 3) {
+            return temp.substring(0, temp.length() - 1) + "k";
+        } else {
+            return temp + "k";
+        }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_detail, menu);
 
-        menu.getItem(2).setActionView(R.layout.action_comment);
-        menu.getItem(3).setActionView(R.layout.action_like);
+        starMenuItem = menu.findItem(R.id.menu_star);
+        likeMenuItem = menu.findItem(R.id.menu_like);
 
-        actionCommentView = menu.getItem(2).getActionView();
-        actionLikeView = menu.getItem(3).getActionView();
+        menu.findItem(R.id.menu_comment).setActionView(R.layout.action_comment);
+        likeMenuItem.setActionView(R.layout.action_like);
+
+        actionCommentView = menu.findItem(R.id.menu_comment).getActionView();
+        actionLikeView = likeMenuItem.getActionView();
 
         commentText = (TextView) actionCommentView.findViewById(R.id.action_item_comment_text);
         likeText = (TextView) actionLikeView.findViewById(R.id.action_item_vote_text);
@@ -179,8 +198,8 @@ public abstract class BaseDetailActivity extends BaseWithToolbarActivity<DetailC
                 if (likeImg.getContentDescription().equals("praise")) {
                     likeImg.setContentDescription("praised");
                     likeImg.setImageResource(R.drawable.praised);
-                    Integer likeNum = Integer.valueOf(likeText.getText().toString());
-                    likeText.setText(likeNum + 1 + "");
+//                    Integer likeNum = Integer.valueOf(likeText.getText().toString());
+//                    likeText.setText(likeNum + 1 + "");
                     showToast("赞+1");
                 } else {
                     likeImg.setContentDescription("praise");
@@ -214,12 +233,12 @@ public abstract class BaseDetailActivity extends BaseWithToolbarActivity<DetailC
             case R.id.menu_star:
                 if (item.getTitle().equals(star)) {
                     mPresenter.addStar(this, mStory);
-                    item.setTitle(stared);
-                    item.setIcon(R.drawable.collected);
+//                    item.setTitle(stared);
+//                    item.setIcon(R.drawable.collected);
                 } else {
                     mPresenter.removeStar(this, mStory);
-                    item.setTitle(star);
-                    item.setIcon(R.drawable.collect);
+//                    item.setTitle(star);
+//                    item.setIcon(R.drawable.collect);
                 }
                 break;
             case R.id.menu_comment:
@@ -238,6 +257,29 @@ public abstract class BaseDetailActivity extends BaseWithToolbarActivity<DetailC
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void setStarState(boolean isStar) {
+        if (isStar) {
+            starMenuItem.setTitle(stared);
+            starMenuItem.setIcon(R.drawable.collected);
+            showToast("已收藏");
+        } else {
+            starMenuItem.setTitle(star);
+            starMenuItem.setIcon(R.drawable.collect);
+            showToast("已取消收藏");
+        }
+    }
+
+    @Override
+    public void showRemoveStarFail() {
+        showToast("移除收藏失败");
+    }
+
+    @Override
+    public void showAddStarFail() {
+        showToast("收藏失败");
     }
 
     private void showShare(String share_url) {
@@ -284,17 +326,17 @@ public abstract class BaseDetailActivity extends BaseWithToolbarActivity<DetailC
         String zepto = "<script src=\"file:///android_asset/zepto.min.js\"></script>\n";
         String autoLoadImage = "onload=\"onLoaded()\"";
 
-        boolean autoLoad = NetUtils.isWifi(this) || (boolean) SPUtils.get(this, Constant.KEY_AUTO_LOAD_IMAGE, true);
+        boolean autoLoad = NetUtils.isWifi(this) || !(boolean) SPUtils.getFromDefaultPref(this, Constant.KEY_NO_LOAD_IMAGE, false);
         boolean nightMode = (boolean) SPUtils.get(this, Constant.KEY_NIGHT, false);
-        boolean largeFont = (boolean) SPUtils.get(this, Constant.KEY_BIG_FONT, false);
-//        if (!autoLoad) { // 移动网络
-//            autoLoad = (boolean) SPUtils.get(this, Constant.KEY_AUTO_LOAD_IMAGE, true);
-//        }
+        boolean largeFont = (boolean) SPUtils.getFromDefaultPref(this, Constant.KEY_BIG_FONT, false);
 
         htmlSb.append(css)
                 .append(zepto)
                 .append(img_replace)
-                .append(video).append("</head><body className=\"\"").append(autoLoad ? autoLoadImage : "").append(" >")
+                .append(video)
+                .append("</head><body className=\"\"")
+                .append(autoLoad ? autoLoadImage : "")
+                .append(" >")
                 .append(content);
         if (nightMode) {
             String night = "<script src=\"file:///android_asset/night.js\"></script>\n";
@@ -308,8 +350,9 @@ public abstract class BaseDetailActivity extends BaseWithToolbarActivity<DetailC
         String html = htmlSb.toString();
 
         html = html.replace("<div class=\"img-place-holder\">", "");
+        Log.e("html1", html);
         html = replaceImgTagFromHTML(html, autoLoad, nightMode);
-
+        Log.e("html2", html);
         webContent.loadDataWithBaseURL("x-data://base", html, "text/html", "UTF-8", null);
     }
 
@@ -358,7 +401,6 @@ public abstract class BaseDetailActivity extends BaseWithToolbarActivity<DetailC
                                     arrayOfString[1] = str;
                                     onImageLoadingComplete("onImageLoadingComplete", arrayOfString);
                                 } catch (Exception e) {
-
                                 }
                             }
                         });
@@ -371,8 +413,8 @@ public abstract class BaseDetailActivity extends BaseWithToolbarActivity<DetailC
         ActivityUtils.toImageViewActivity(this, imgPath, imgUrlList);
     }
 
-    public final void onImageLoadingComplete(String paramString, String[] paramArrayOfString) {
-        String str = "'" + TextUtils.join("','", paramArrayOfString) + "'";
-        webContent.loadUrl("javascript:" + paramString + "(" + str + ");");
+    public final void onImageLoadingComplete(String funName, String[] paramArray) {
+        String str = "'" + TextUtils.join("','", paramArray) + "'";
+        webContent.loadUrl("javascript:" + funName + "(" + str + ");");
     }
 }

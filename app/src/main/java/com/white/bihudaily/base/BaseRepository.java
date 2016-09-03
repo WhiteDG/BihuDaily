@@ -11,7 +11,7 @@ import com.white.bihudaily.api.BihuClient;
 public class BaseRepository implements BaseSource {
 
 //    protected CompositeSubscription mCompositeSubscription;
-    protected BihuApi mBihuApi = BihuClient.getBihuApi();
+    protected BihuApi mBihuApi = BihuClient.getBihuService();
 
 
     /**

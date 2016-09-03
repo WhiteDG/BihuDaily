@@ -50,7 +50,7 @@ public class EditorActivity extends BaseWithToolbarActivity {
 
     @Override
     protected void prepareData(Intent intent) {
-        Theme theme = (Theme) intent.getSerializableExtra(Constant.THEME);
+        Theme theme = intent.getParcelableExtra(Constant.THEME);
         mEditors = theme.getEditors();
     }
 

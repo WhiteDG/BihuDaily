@@ -25,8 +25,6 @@ public class MyStarActivity extends BaseWithToolbarActivity<MyStarContract.Prese
     RecyclerView rvMyStar;
     ThemeAdapter mThemeAdapter;
 
-    private List<Integer> readerList;
-
     @Override
     protected MyStarContract.Presenter createPresenter() {
         return new MyStarPresenter(new MyStarRepository(), this);
@@ -44,7 +42,6 @@ public class MyStarActivity extends BaseWithToolbarActivity<MyStarContract.Prese
 
     @Override
     protected void prepareData(Intent intent) {
-        readerList = mPresenter.getReaderList(this);
     }
 
     @Override
@@ -54,7 +51,7 @@ public class MyStarActivity extends BaseWithToolbarActivity<MyStarContract.Prese
         rvMyStar.setLayoutManager(new LinearLayoutManager(this));
         rvMyStar.setHasFixedSize(true);
 
-        mThemeAdapter = new ThemeAdapter(new ArrayList<Story>(0), this, readerList);
+        mThemeAdapter = new ThemeAdapter(new ArrayList<Story>(0), this);
         rvMyStar.setAdapter(mThemeAdapter);
 
     }
@@ -77,7 +74,6 @@ public class MyStarActivity extends BaseWithToolbarActivity<MyStarContract.Prese
     @Override
     protected void initData(Bundle savedInstanceState) {
 
-//        mPresenter.loadStories(this);
     }
 
     @Override

@@ -13,6 +13,7 @@ import com.white.bihudaily.R;
 import com.white.bihudaily.adapter.StoriesAdapter;
 import com.white.bihudaily.app.Constant;
 import com.white.bihudaily.base.BaseFragment;
+import com.white.bihudaily.base.BaseRVAdapter;
 import com.white.bihudaily.bean.Latest;
 import com.white.bihudaily.bean.Story;
 import com.white.bihudaily.bean.TopStory;
@@ -43,8 +44,6 @@ public class DailyFragment extends BaseFragment<DailyContract.Presenter> impleme
 
     private String currentDate;
 
-    private RollViewPager rollViewPager;
-
 
     public DailyFragment() {
     }
@@ -68,7 +67,7 @@ public class DailyFragment extends BaseFragment<DailyContract.Presenter> impleme
 
     @Override
     protected void prepareData() {
-        readerList = mPresenter.getReaderList(getContext());
+//        readerList = mPresenter.getReaderList(getContext());
     }
 
     @Override
@@ -76,7 +75,7 @@ public class DailyFragment extends BaseFragment<DailyContract.Presenter> impleme
         mRvStories.setLayoutManager(new LinearLayoutManager(getContext()));
         mRvStories.setItemAnimator(new DefaultItemAnimator());
         mRvStories.setHasFixedSize(true);
-        mStoryAdapter = new StoriesAdapter(new ArrayList<Story>(0), this, readerList);
+        mStoryAdapter = new StoriesAdapter(new ArrayList<Story>(0), this);
         mRvStories.setAdapter(mStoryAdapter);
         mSrl_stories.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
     }
@@ -87,7 +86,7 @@ public class DailyFragment extends BaseFragment<DailyContract.Presenter> impleme
         mRvStories.addOnScrollListener(new LoadMoreScrollListener() {
             @Override
             public void onLoadMore() {
-                if (mStoryAdapter.isShowFooter()) {
+                if (mStoryAdapter.getFooterState() == BaseRVAdapter.STATE_LOADING) {
                     return;
                 }
                 // 加载前一天的数据
@@ -128,7 +127,7 @@ public class DailyFragment extends BaseFragment<DailyContract.Presenter> impleme
 
     @Override
     protected void getData() {
-        mPresenter.loadLatest(getContext(), !(boolean) SPUtils.get(getContext(), Constant.KEY_HASOPENAPP, false));
+        mPresenter.loadLatest(getContext(), (boolean) SPUtils.get(getContext(), Constant.KEY_HAS_CACHE, false));
     }
 
     @Override
@@ -146,18 +145,7 @@ public class DailyFragment extends BaseFragment<DailyContract.Presenter> impleme
     }
 
     @Override
-    public void setMoreLoadingIndicator(boolean active) {
-
-    }
-
-    @Override
     public void showTopStories(final List<TopStory> topStories) {
-        if (mStoryAdapter.getHeaderView() != null) {
-            rollViewPager.setTopStories(topStories);
-            rollViewPager.notifyDataChange();
-            rollViewPager.startRoll();
-            return;
-        }
         View headerView = initHeaderView(topStories);
         mStoryAdapter.setHeaderView(headerView);
     }
@@ -174,14 +162,14 @@ public class DailyFragment extends BaseFragment<DailyContract.Presenter> impleme
             FrameLayout flTop = (FrameLayout) headerView.findViewById(R.id.fl_top); // 放ViewPager的framelayout
             LinearLayout LlDots = (LinearLayout) headerView.findViewById(R.id.ll_dots);// 放小圆点的linerlayout
             // 初始化viewpager，小圆点
-            rollViewPager = new RollViewPager(getContext(), initDots(LlDots, topStories.size()),
+            RollViewPager rollViewPager = new RollViewPager(getContext(), initDots(LlDots, topStories.size()),
                     R.drawable.point_focured,
                     R.drawable.point_nomal, new RollViewPager.OnPagerClickCallback() {
                 @Override
                 public void onPagerClick(int position) {
                     TopStory topStory = topStories.get(position);
                     Story story = new Story(topStory.getId(), topStory.getTitle(), topStory.getImage(), null);
-                    ActivityUtils.toStoryDeatilsActivity(getContext(), story);
+                    ActivityUtils.toStoryDetailActivity(getContext(), story);
                 }
             });
             rollViewPager.setLayoutParams(new LinearLayout.LayoutParams(
@@ -227,16 +215,17 @@ public class DailyFragment extends BaseFragment<DailyContract.Presenter> impleme
 
     @Override
     public void showStories(List<Story> stories) {
-        mStoryAdapter.replaceData(stories);
+        mStoryAdapter.addTitle(getResources().getString(R.string.today_news));
+        mStoryAdapter.addDataList(stories);
         ActivityUtils.setVisible(true, mRvStories);
     }
 
     @Override
     public void showLatest(Latest latest) {
+        mStoryAdapter.clearData();
         if (latest.getTop_stories() != null && latest.getTop_stories().size() != 0) {
             showTopStories(latest.getTop_stories());
         }
-        mStoryAdapter.addTitle(getResources().getString(R.string.today_news));
         showStories(latest.getStories());
     }
 
@@ -257,11 +246,11 @@ public class DailyFragment extends BaseFragment<DailyContract.Presenter> impleme
 
     @Override
     public void showStoryDetailsUi(Story story) {
-        ActivityUtils.toStoryDeatilsActivity(getContext(), story);
+        ActivityUtils.toStoryDetailActivity(getContext(), story);
     }
 
     @Override
-    public void showLoadingLatestsError() {
+    public void showLoadingLatestError() {
         showSnackBar(getView(), R.string.load_fail);
     }
 

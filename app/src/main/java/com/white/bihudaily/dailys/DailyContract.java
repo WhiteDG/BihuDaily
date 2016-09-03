@@ -26,15 +26,13 @@ public interface DailyContract {
 
         void setRefreshLoadingIndicator(boolean active);
 
-        void setMoreLoadingIndicator(boolean active);
-
         void showTopStories(List<TopStory> topStories);
 
         void showStories(List<Story> stories);
 
         void showStoryDetailsUi(Story story);
 
-        void showLoadingLatestsError();
+        void showLoadingLatestError();
 
         void showNoStories();
 

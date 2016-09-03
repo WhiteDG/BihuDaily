@@ -20,10 +20,10 @@ import rx.Subscription;
  * Date 2016/8/13
  * Time 12:45
  */
-public class SplashPresenter extends BasePresenterImpl<SplashSource, SplachContract.View> implements SplachContract.Presenter {
+public class SplashPresenter extends BasePresenterImpl<SplashSource, SplashContract.View> implements SplashContract.Presenter {
 
 
-    public SplashPresenter(SplashSource source, SplachContract.View splashView) {
+    public SplashPresenter(SplashSource source, SplashContract.View splashView) {
         super(source, splashView);
     }
 
@@ -47,20 +47,20 @@ public class SplashPresenter extends BasePresenterImpl<SplashSource, SplachContr
     @Override
     public void showImg(Activity context) {
         if (!NetUtils.isConnected(context)) {
-            mView.turn2DailysActivity();
+            mView.turn2DailyActivity();
             return;
         }
 
-        boolean hasOpenApp = (boolean) SPUtils.get(context, Constant.KEY_HASOPENAPP, false);
-        String imgText = (String) SPUtils.get(context, Constant.KEY_STARTIMGTEXT, "@Bihu");
+        boolean hasOpenApp = (boolean) SPUtils.get(context, Constant.KEY_HAS_OPEN_APP, false);
+        String imgText = (String) SPUtils.get(context, Constant.KEY_START_IMG_TEXT, "@Bihu");
         mView.showText(imgText);
         if (!hasOpenApp) {
             // 第一次打开APP
             mView.showImg(R.drawable.splash);
-            SPUtils.put(context, Constant.KEY_HASOPENAPP, true);
+            SPUtils.put(context, Constant.KEY_HAS_OPEN_APP, true);
             loadImg();
         } else {
-            String imgPath = (String) SPUtils.get(context, Constant.KEY_STARTIMGPATH, "");
+            String imgPath = (String) SPUtils.get(context, Constant.KEY_START_IMG_PATH, "");
             if (imgPath != null && !imgPath.equals("")) {
                 mView.showImg(imgPath);
                 String today = (String) SPUtils.get(context, Constant.KEY_TODAY, "");
@@ -74,5 +74,4 @@ public class SplashPresenter extends BasePresenterImpl<SplashSource, SplachContr
             }
         }
     }
-
 }

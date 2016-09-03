@@ -10,14 +10,16 @@ import android.view.View;
 
 import com.white.bihudaily.R;
 import com.white.bihudaily.adapter.CommentAdapter;
-import com.white.bihudaily.other.DividerItemDecoration;
 import com.white.bihudaily.app.Constant;
+import com.white.bihudaily.base.BaseRVAdapter;
 import com.white.bihudaily.base.BaseWithToolbarActivity;
 import com.white.bihudaily.bean.AdapterBean;
 import com.white.bihudaily.bean.Comment;
 import com.white.bihudaily.bean.Comments;
 import com.white.bihudaily.data.impl.CommentRepository;
+import com.white.bihudaily.other.DividerItemDecoration;
 import com.white.bihudaily.other.ItemTouchListener;
+import com.white.bihudaily.other.LoadMoreScrollListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +41,7 @@ public class CommentActivity extends BaseWithToolbarActivity<CommentContract.Pre
 
     private int lastCommentId;
 
+    private boolean noMore;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -69,9 +72,9 @@ public class CommentActivity extends BaseWithToolbarActivity<CommentContract.Pre
     @Override
     protected void prepareData(Intent intent) {
         storyId = intent.getIntExtra(Constant.STORY_ID, 0);
-        commentCount = intent.getIntExtra(Constant.COMMENTCOUNT, 0);
-        shortCommentCount = intent.getIntExtra(Constant.SHORTCOMMENTCOUNT, 0);
-        longCommentCount = intent.getIntExtra(Constant.LONGCOMMENTCOUNT, 0);
+        commentCount = intent.getIntExtra(Constant.COMMENT_COUNT, 0);
+        shortCommentCount = intent.getIntExtra(Constant.SHORT_COMMENT_COUNT, 0);
+        longCommentCount = intent.getIntExtra(Constant.LONG_COMMENT_COUNT, 0);
     }
 
     @Override
@@ -103,6 +106,22 @@ public class CommentActivity extends BaseWithToolbarActivity<CommentContract.Pre
             }
         });
         rvComment.addOnItemTouchListener(itemTouchListener);
+        rvComment.addOnScrollListener(new LoadMoreScrollListener() {
+            @Override
+            public void onLoadMore() {
+                if (noMore) {
+                    showToast(R.string.no_more_comment);
+                    return;
+                }
+                // 没有加载过短评或处于加载状态直接返回
+                if (lastCommentId == 0 ||
+                        mCommentAdapter.getFooterState() == BaseRVAdapter.STATE_LOADING) {
+                    return;
+                }
+                // 加载更多评论
+                mPresenter.loadBeforeShortComment(storyId, lastCommentId);
+            }
+        });
     }
 
     @Override
@@ -113,7 +132,7 @@ public class CommentActivity extends BaseWithToolbarActivity<CommentContract.Pre
     @Override
     public void showLoading(boolean isShow) {
         if (isShow) {
-            showProgressDialog("努力加载中");
+            showProgressDialog(getString(R.string.loading));
         } else {
             dismissProgressDialog();
         }
@@ -126,13 +145,13 @@ public class CommentActivity extends BaseWithToolbarActivity<CommentContract.Pre
 
     @Override
     public void showLongComment(Comments comments) {
-        mCommentAdapter.addTitle(comments.getComments().size() + " 条长评");// 添加长评论数展示
+        mCommentAdapter.addTitle(comments.getComments().size() + getString(R.string.long_comment_title));// 添加长评论数展示
         if (comments.getComments() == null || comments.getComments().size() == 0) {
             mCommentAdapter.addEmptyView(); //深度长评虚位以待
         } else {
             mCommentAdapter.addDataList(comments.getComments()); // 填加长评论
         }
-        mCommentAdapter.addTitle(shortCommentCount + " 条短评");// 添加短评论数展示
+        mCommentAdapter.addTitle(shortCommentCount + getString(R.string.short_comment_title));// 添加短评论数展示
 
 
     }
@@ -143,17 +162,6 @@ public class CommentActivity extends BaseWithToolbarActivity<CommentContract.Pre
         rvComment.smoothScrollToPosition(itemCount);
         mCommentAdapter.addDataList(comments.getComments());
         rvComment.removeOnItemTouchListener(itemTouchListener);
-
-//        rvComment.addOnScrollListener(new LoadMoreScrollListener() {
-//            @Override
-//            public void onLoadMore() {
-//                if (mCommentAdapter.isShowFooter()) {
-//                    return;
-//                }
-//                // 加载更多评论
-//                mPresenter.loadBeforeComment(storyId, lastCommentId);
-//            }
-//        });
     }
 
     @Override
@@ -165,7 +173,7 @@ public class CommentActivity extends BaseWithToolbarActivity<CommentContract.Pre
     public void showLoadMore(boolean active) {
         if (active) {
             mCommentAdapter.addFooter();
-            rvComment.scrollToPosition(mCommentAdapter.getItemCount());
+            rvComment.smoothScrollToPosition(mCommentAdapter.getItemCount());
         } else {
             mCommentAdapter.removerFooter();
         }
@@ -174,6 +182,12 @@ public class CommentActivity extends BaseWithToolbarActivity<CommentContract.Pre
     @Override
     public void showBeforeComment(List<Comment> beforeCommentList) {
         mCommentAdapter.addDataList(beforeCommentList);
+    }
+
+    @Override
+    public void showNoMoreData() {
+        noMore = true;
+        showToast(getString(R.string.no_more_comment));
     }
 
 

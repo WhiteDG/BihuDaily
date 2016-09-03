@@ -1,10 +1,10 @@
 package com.white.bihudaily.db;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.white.bihudaily.app.BihuDailyApplication;
 import com.white.bihudaily.app.Constant;
 import com.white.bihudaily.bean.Story;
 
@@ -19,25 +19,27 @@ import java.util.List;
 public class StarDao {
     private BihuDBHelper mBihuDBHelper;
 
-    public StarDao(Context context) {
-        mBihuDBHelper = new BihuDBHelper(context);
+    public StarDao() {
+        mBihuDBHelper = new BihuDBHelper(BihuDailyApplication.getAppContext());
     }
 
-    public void save(Story story) {
+    public boolean save(Story story) {
         SQLiteDatabase database = mBihuDBHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(Constant.ID, story.getId());
         contentValues.put(Constant.TITLE, story.getTitle());
         contentValues.put(Constant.IMAGE, story.getImages() == null ? null : story.getImages().get(0));
-        contentValues.put(Constant.MULTIPIC, story.isMultipic() ? 1 : 0);
-        database.insert(Constant.TABLE_STAR, null, contentValues);
+        contentValues.put(Constant.MULTI_PIC, story.isMultipic() ? 1 : 0);
+        long insert = database.insert(Constant.TABLE_STAR, null, contentValues);
         database.close();
+        return insert != -1;
     }
 
-    public void delete(Story story) {
+    public boolean delete(Story story) {
         SQLiteDatabase database = mBihuDBHelper.getWritableDatabase();
-        database.delete(Constant.TABLE_STAR, " id=? ", new String[]{story.getId() + ""});
+        int i = database.delete(Constant.TABLE_STAR, " id=? ", new String[]{story.getId() + ""});
         database.close();
+        return i != 0;
     }
 
     public List<Story> getStarList() {
@@ -46,17 +48,17 @@ public class StarDao {
         Cursor cursor = null;
         try {
             cursor = database.query(Constant.TABLE_STAR,
-                    new String[]{Constant.ID, Constant.TITLE, Constant.IMAGE, Constant.MULTIPIC},
+                    new String[]{Constant.ID, Constant.TITLE, Constant.IMAGE, Constant.MULTI_PIC},
                     null, null, null, null, null);
             while (cursor.moveToNext()) {
                 int id = cursor.getInt(cursor.getColumnIndex(Constant.ID));
                 String title = cursor.getString(cursor.getColumnIndex(Constant.TITLE));
                 String image = cursor.getString(cursor.getColumnIndex(Constant.IMAGE));
-                int multipic = cursor.getInt(cursor.getColumnIndex(Constant.MULTIPIC));
-                stories.add(new Story(id, title, image, null, multipic == 1));
+                int multiPic = cursor.getInt(cursor.getColumnIndex(Constant.MULTI_PIC));
+                stories.add(new Story(id, title, image, null, multiPic == 1, false));
             }
         } catch (Exception e) {
-
+            e.printStackTrace();
         } finally {
             if (cursor != null) {
                 cursor.close();
@@ -77,7 +79,7 @@ public class StarDao {
                 starListId.add(cursor.getInt(cursor.getColumnIndex(Constant.ID)));
             }
         } catch (Exception e) {
-
+            e.printStackTrace();
         } finally {
             if (cursor != null) {
                 cursor.close();

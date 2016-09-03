@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="@string/title_normal"
+        >
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="KEY_NO_LOAD_IMAGE"
+            android:summary="@string/summary_no_load_img"
+            android:title="@string/title_no_load_img"
+            />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="KEY_BIG_FONT"
+            android:title="@string/title_big_font"
+            />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/title_other"
+        >
+        <Preference
+            android:key="@string/key_clear_cache"
+            android:title="@string/title_clear_cache"
+            />
+
+        <Preference
+            android:key="@string/key_notice"
+            android:title="@string/title_notice"
+            />
+
+        <Preference
+            android:key="@string/key_developer"
+            android:title="@string/title_developer"
+            />
+    </PreferenceCategory>
+</PreferenceScreen>

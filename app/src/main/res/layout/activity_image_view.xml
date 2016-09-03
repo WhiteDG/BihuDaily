@@ -13,6 +13,7 @@
         android:id="@+id/vp_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/toolbar_layout"
         />
 
     <TextView
@@ -22,9 +23,8 @@
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
         android:layout_marginBottom="16dp"
-        android:text="1/10"
         android:textColor="@android:color/white"
-        android:textSize="18sp"
+        android:textSize="20sp"
         />
 </RelativeLayout>
 

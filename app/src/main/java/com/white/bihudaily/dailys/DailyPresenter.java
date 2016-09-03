@@ -30,7 +30,8 @@ public class DailyPresenter extends BasePresenterImpl<DailySource, DailyContract
     @Override
     public void loadLatest(final Context context, final boolean getFromCache) {
         if (getFromCache) {
-            Subscription subscribe = mSource.getCache(context).compose(TransformUtils.<Latest>defaultSchedulers())
+            Subscription subscribe = mSource.getCache(context)
+                    .compose(TransformUtils.<Latest>defaultSchedulers())
                     .subscribe(new BaseSubscriber<Latest>() {
                         @Override
                         protected void onFailure(Throwable e) {
@@ -55,7 +56,7 @@ public class DailyPresenter extends BasePresenterImpl<DailySource, DailyContract
                     @Override
                     protected void onFailure(Throwable e) {
                         mView.setRefreshLoadingIndicator(false);
-                        mView.showLoadingLatestsError();
+                        mView.showLoadingLatestError();
                     }
 
                     @Override

@@ -11,7 +11,7 @@ import com.white.bihudaily.bean.StartImg;
  * Date 2016/8/13
  * Time 12:47
  */
-public interface SplachContract {
+public interface SplashContract {
 
     interface View extends BaseView<Presenter> {
 
@@ -19,7 +19,7 @@ public interface SplachContract {
 
         void showText(String text);
 
-        void turn2DailysActivity();
+        void turn2DailyActivity();
 
         void getStartImgSuccess(StartImg startImg);
 
@@ -31,6 +31,5 @@ public interface SplachContract {
         void loadImg();
 
         void showImg(Activity context);
-
     }
 }

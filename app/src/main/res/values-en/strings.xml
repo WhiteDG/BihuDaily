@@ -24,8 +24,8 @@
     <string name="menu_stared">Stared</string>
     <string name="menu_start_game">StartGameDaily</string>
     <string name="menu_user_recommend">UserRecommendDaily</string>
-    <string name="news_preview_image"/>
-    <string name="comment_title"> Comments</string>
+    <string name="news_preview_image">news_preview_image</string>
+    <string name="comment_title">" Comments"</string>
     <string name="editor_info_title">Editor Info</string>
     <string name="editor_list_title">Editor</string>
     <string name="get_long_comment_fail">Get Long Comments Fail</string>
@@ -34,4 +34,20 @@
     <string name="my_star">My Star</string>
     <string name="today_news">Today Hot News</string>
     <string name="offline">Offline</string>
+    <string name="no_more_comment">No more comment</string>
+    <string name="action_news_comment_default">...</string>
+    <string name="action_news_like_default">...</string>
+    <string name="share_this_news">share_this_news</string>
+    <string name="long_comment_title">" Long Comments"</string>
+    <string name="short_comment_title">" Short Comments"</string>
+    <string name="loading">Loading</string>
+    <string name="title_normal">Normal</string>
+    <string name="summary_no_load_img">No load image when use 2G/3G/4G</string>
+    <string name="title_big_font">Use large font</string>
+    <string name="title_other">Other</string>
+    <string name="title_clear_cache">Clear cache</string>
+    <string name="title_developer">About developer</string>
+    <string name="title_no_load_img">No image mode</string>
+    <string name="title_notice">Notice</string>
+    <string name="toast_clear_cache">Cache was clear</string>
 </resources>

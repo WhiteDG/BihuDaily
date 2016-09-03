@@ -27,39 +27,6 @@ public class CommonUtil {
     }
 
     /**
-     * 获取昨天日期
-     *
-     * @param today 今天
-     * @return 返回格式 yyyyMMdd
-     */
-    public static String getYesterday(Date today, int days) {
-        Calendar calendar = Calendar.getInstance(Locale.CHINA);
-        calendar.setTime(today);
-        calendar.add(Calendar.DAY_OF_MONTH, -days);
-        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMdd", Locale.CHINA);
-        System.out.println(sdf1.format(calendar.getTime()));
-        return sdf1.format(calendar.getTime());
-    }
-
-    /**
-     * 获取昨天日期
-     *
-     * @param today 今天
-     * @return 返回格式 yyyyMMdd
-     */
-    public static String getYesterday(String today, int days) {
-        int year = Integer.parseInt(today.substring(0, 4));
-        int month = Integer.parseInt(today.substring(4, 6));
-        int day = Integer.parseInt(today.substring(6, 8));
-        Calendar calendar = Calendar.getInstance(Locale.CHINA);
-        calendar.set(year, month - 1, day);
-        calendar.add(Calendar.DAY_OF_MONTH, -days);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd", Locale.CHINA);
-        System.out.println(sdf.format(calendar.getTime()));
-        return sdf.format(calendar.getTime());
-    }
-
-    /**
      * 获取用于显示的日期
      *
      * @return 返回格式 yyyy年MM月dd日
@@ -133,7 +100,7 @@ public class CommonUtil {
     }
 
     public static String timestamp2Date(long time) {
-        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd hh:mm",Locale.CHINA);
+        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd hh:mm", Locale.CHINA);
         return sdf.format(new Date(time * 1000));
     }
 }

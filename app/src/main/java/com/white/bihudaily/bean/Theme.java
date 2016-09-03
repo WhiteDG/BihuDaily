@@ -1,6 +1,8 @@
 package com.white.bihudaily.bean;
 
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
 /**
@@ -8,7 +10,7 @@ import java.util.List;
  * Date 2016/8/16
  * Time 13:26
  */
-public class Theme implements Serializable {
+public class Theme implements Parcelable {
     private List<Story> stories;
     private String description;
     private String background;
@@ -81,4 +83,47 @@ public class Theme implements Serializable {
     public void setImage_source(String image_source) {
         this.image_source = image_source;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeTypedList(this.stories);
+        dest.writeString(this.description);
+        dest.writeString(this.background);
+        dest.writeString(this.color);
+        dest.writeString(this.name);
+        dest.writeString(this.image);
+        dest.writeTypedList(this.editors);
+        dest.writeString(this.image_source);
+    }
+
+    public Theme() {
+    }
+
+    protected Theme(Parcel in) {
+        this.stories = in.createTypedArrayList(Story.CREATOR);
+        this.description = in.readString();
+        this.background = in.readString();
+        this.color = in.readString();
+        this.name = in.readString();
+        this.image = in.readString();
+        this.editors = in.createTypedArrayList(Editor.CREATOR);
+        this.image_source = in.readString();
+    }
+
+    public static final Parcelable.Creator<Theme> CREATOR = new Parcelable.Creator<Theme>() {
+        @Override
+        public Theme createFromParcel(Parcel source) {
+            return new Theme(source);
+        }
+
+        @Override
+        public Theme[] newArray(int size) {
+            return new Theme[size];
+        }
+    };
 }

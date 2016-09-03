@@ -21,6 +21,10 @@ public class Comment extends AdapterBean implements Parcelable {
     private String avatar;
 
 
+    public Comment() {
+
+    }
+
     public Comment(int typeHeader) {
         showType = typeHeader;
     }

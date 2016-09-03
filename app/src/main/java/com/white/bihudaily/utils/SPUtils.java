@@ -8,6 +8,7 @@ package com.white.bihudaily.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -56,17 +57,32 @@ public class SPUtils {
 
     }
 
+
+    public static Object get(Context context, String key, Object defaultObject) {
+        return get(context, key, defaultObject, false);
+    }
+
+    public static Object getFromDefaultPref(Context context, String key, Object defaultObject) {
+        return get(context, key, defaultObject, true);
+    }
+
     /**
      * 得到保存数据的方法，我们根据默认值得到保存的数据的具体类型，然后调用相对于的方法获取值
      *
      * @param context
-     * @param key
-     * @param defaultObject
+     * @param key           键
+     * @param defaultObject 默认值
+     * @param defaultPref   是否从默认pref中取值
      * @return
      */
-    public static Object get(Context context, String key, Object defaultObject) {
-        SharedPreferences sp = context.getSharedPreferences(FILE_NAME,
-                Context.MODE_PRIVATE);
+    public static Object get(Context context, String key, Object defaultObject, boolean defaultPref) {
+        SharedPreferences sp;
+        if (defaultPref) {
+            sp = PreferenceManager.getDefaultSharedPreferences(context);
+        } else {
+            sp = context.getSharedPreferences(FILE_NAME,
+                    Context.MODE_PRIVATE);
+        }
 
         if (defaultObject instanceof String) {
             return sp.getString(key, (String) defaultObject);
@@ -171,6 +187,7 @@ public class SPUtils {
                     return;
                 }
             } catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
+                e.printStackTrace();
             }
             editor.commit();
         }

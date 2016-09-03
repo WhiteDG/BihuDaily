@@ -21,7 +21,6 @@ public interface ThemeSource extends BaseSource {
     List<Integer> getReader(Context context);
 
 
-
     Observable<Theme> loadTheme(int id);
 
 

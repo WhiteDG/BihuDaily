@@ -1,7 +1,5 @@
 package com.white.bihudaily;
 
-import com.white.bihudaily.utils.CommonUtil;
-
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -16,19 +14,7 @@ public class ExampleUnitTest {
     }
 
     @Test
-    public void testGetYesterday() throws Exception {
-        CommonUtil.getYesterday("20160816", 1);
-    }
+    public void testFormat() throws Exception {
 
-    @Test
-    public void testGetShowDate() {
-        String showDate = CommonUtil.getShowDate("20160816");
-        System.out.print(showDate);
-    }
-
-    @Test
-    public void testFormatDate() {
-        String formatDate = CommonUtil.timestamp2Date(1471502974);
-        System.out.print(formatDate);
     }
 }

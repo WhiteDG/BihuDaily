@@ -71,30 +71,30 @@ public class CommentPresenter extends BasePresenterImpl<CommentSource, CommentCo
     }
 
     @Override
-    public void loadBeforeComment(int storyId, int lastCommentId) {
+    public void loadBeforeShortComment(int storyId, int lastCommentId) {
         mView.showLoadMore(true);
-        mSource.loadBeforeComment(storyId, lastCommentId, new BaseSubscriber<Comments>() {
+        Subscription subscription = mSource.loadBeforeComment(storyId, lastCommentId).compose(TransformUtils.<Comments>defaultSchedulers())
+                .subscribe(new BaseSubscriber<Comments>() {
+                    @Override
+                    protected void onFailure(Throwable e) {
+                        mView.showLoadMore(false);
+                        mView.showToast(R.string.load_fail);
+                    }
 
-            @Override
-            protected void onFailure(Throwable e) {
-                mView.showLoadMore(false);
-                mView.showToast(R.string.load_fail);
-            }
+                    @Override
+                    protected void onSuccess(Comments comments) {
+                        mView.showLoadMore(false);
+                        List<Comment> beforeCommentList = comments.getComments();
+                        if (beforeCommentList != null && beforeCommentList.size() != 0) {
+                            mView.setLastCommentId(beforeCommentList.get(beforeCommentList.size() - 1).getId());
+                            mView.showBeforeComment(beforeCommentList);
+                        } else {
+                            mView.showNoMoreData();
+                        }
+                    }
+                });
+        mSubscriptions.add(subscription);
 
-            @Override
-            protected void onSuccess(Comments comments) {
-                mView.showLoadMore(false);
-                List<Comment> beforeCommentList = comments.getComments();
-                if (beforeCommentList != null && beforeCommentList.size() != 0) {
-                    mView.setLastCommentId(beforeCommentList.get(beforeCommentList.size() - 1).getId());
-                    mView.showBeforeComment(beforeCommentList);
-                } else {
-                    mView.showToast("没有更多评论了");
-                }
-
-
-            }
-        });
     }
 
 }
