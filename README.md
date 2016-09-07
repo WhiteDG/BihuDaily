@@ -43,6 +43,12 @@ API来自 https://github.com/izzyleung/ZhihuDailyPurify/wiki/知乎日报-API-�
 ![截屏][5]
 
 
+## 使用到的开源库
+* [Butterknife](https://github.com/JakeWharton/butterknife)
+* [Retrofit](https://github.com/square/retrofit)
+* [Glide](https://github.com/bumptech/glide)
+* [PhotoView](https://github.com/chrisbanes/PhotoView)
+
 [1]: https://github.com/WhiteDG/BihuDaily/blob/master/screenshot/index.jpg
 [2]: https://github.com/WhiteDG/BihuDaily/blob/master/screenshot/content.jpg
 [3]: https://github.com/WhiteDG/BihuDaily/blob/master/screenshot/comment.jpg
