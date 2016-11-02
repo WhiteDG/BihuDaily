@@ -100,7 +100,7 @@ public class CommonUtil {
     }
 
     public static String timestamp2Date(long time) {
-        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd hh:mm", Locale.CHINA);
+        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd HH:mm", Locale.CHINA);
         return sdf.format(new Date(time * 1000));
     }
 }

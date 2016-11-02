@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/login_bg"
     android:orientation="vertical"
-    tools:context="com.white.bihudaily.login.LoginActivity">
+    tools:context=".module.login.LoginActivity">
 
     <include layout="@layout/toolbar"/>
 

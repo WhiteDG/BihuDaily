@@ -7,7 +7,7 @@
     android:layout_gravity="center"
     android:background="?android:attr/listDivider"
     android:orientation="vertical"
-    tools:context="com.white.bihudaily.editor.EditorInfoActivity">
+    tools:context=".module.editor.EditorInfoActivity">
 
     <include layout="@layout/toolbar"/>
 

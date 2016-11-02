@@ -27,27 +27,27 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
 
-import com.white.bihudaily.app.Constant;
 import com.white.bihudaily.app.BihuDailyApplication;
+import com.white.bihudaily.app.Constant;
 import com.white.bihudaily.bean.Editor;
 import com.white.bihudaily.bean.Story;
 import com.white.bihudaily.bean.StoryExtra;
 import com.white.bihudaily.bean.Theme;
-import com.white.bihudaily.bigimage.ImageViewActivity;
-import com.white.bihudaily.comment.CommentActivity;
-import com.white.bihudaily.dailys.DailyActivity;
-import com.white.bihudaily.detail.DetailActivity;
-import com.white.bihudaily.detail.ThemeDetailActivity;
-import com.white.bihudaily.editor.EditorActivity;
-import com.white.bihudaily.editor.EditorInfoActivity;
-import com.white.bihudaily.login.LoginActivity;
-import com.white.bihudaily.mystar.MyStarActivity;
-import com.white.bihudaily.settings.SettingActivity;
+import com.white.bihudaily.module.bigimage.ImageViewActivity;
+import com.white.bihudaily.module.comment.CommentActivity;
+import com.white.bihudaily.module.dailys.DailyActivity;
+import com.white.bihudaily.module.detail.DetailActivity;
+import com.white.bihudaily.module.detail.ThemeDetailActivity;
+import com.white.bihudaily.module.editor.EditorActivity;
+import com.white.bihudaily.module.editor.EditorInfoActivity;
+import com.white.bihudaily.module.login.LoginActivity;
+import com.white.bihudaily.module.mystar.MyStarActivity;
+import com.white.bihudaily.module.settings.SettingActivity;
 
 import java.io.Serializable;
 import java.util.List;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.gson.internal.$Gson$Preconditions.checkNotNull;
 
 
 /**

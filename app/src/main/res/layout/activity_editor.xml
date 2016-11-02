@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.white.bihudaily.editor.EditorActivity">
+    tools:context=".module.editor.EditorActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
