@@ -12,7 +12,7 @@ import com.white.bihudaily.R;
 import com.white.bihudaily.base.BaseRVAdapter;
 import com.white.bihudaily.bean.Story;
 import com.white.bihudaily.utils.ActivityUtils;
-import com.white.bihudaily.utils.ImageLoader;
+import com.white.bihudaily.utils.imageloader.ImageLoader;
 
 import java.util.List;
 
@@ -81,7 +81,7 @@ public class StoriesAdapter extends BaseRVAdapter<Story> {
                             story.isRead() ? R.color.textReader : android.R.color.black));
 
             storyViewHolder.tvQuestionTitle.setText(story.getTitle());
-            ImageLoader.display(mFragment, storyViewHolder.ivThumbnailImage, story.getImages().get(0));
+            ImageLoader.getInstance().display(mFragment, storyViewHolder.ivThumbnailImage, story.getImages().get(0));
             // 显示多图标志
             ActivityUtils.setVisible(story.isMultipic(), storyViewHolder.ivMultiPic);
 

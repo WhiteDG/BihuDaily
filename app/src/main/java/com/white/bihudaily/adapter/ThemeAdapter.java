@@ -13,7 +13,7 @@ import com.white.bihudaily.R;
 import com.white.bihudaily.base.BaseRVAdapter;
 import com.white.bihudaily.bean.Story;
 import com.white.bihudaily.utils.ActivityUtils;
-import com.white.bihudaily.utils.ImageLoader;
+import com.white.bihudaily.utils.imageloader.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,9 +86,9 @@ public class ThemeAdapter extends BaseRVAdapter<Story> {
                             story.isRead() ? R.color.textReader : android.R.color.black));
             storyViewHolder.tvQuestionTitle.setText(story.getTitle());
             if (mFragment == null) {
-                ImageLoader.display(mActivity, storyViewHolder.ivThumbnailImage, story.getImages().get(0));
+                ImageLoader.getInstance().display(mActivity, storyViewHolder.ivThumbnailImage, story.getImages().get(0));
             } else {
-                ImageLoader.display(mFragment, storyViewHolder.ivThumbnailImage, story.getImages().get(0));
+                ImageLoader.getInstance().display(mFragment, storyViewHolder.ivThumbnailImage, story.getImages().get(0));
             }
             ActivityUtils.setVisible(story.isMultipic(), storyViewHolder.ivMultiPic);
 

@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.white.bihudaily.R;
 import com.white.bihudaily.bean.TopStory;
-import com.white.bihudaily.utils.ImageLoader;
+import com.white.bihudaily.utils.imageloader.ImageLoader;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -268,7 +268,7 @@ public class RollViewPager extends ViewPager {
             if (isShowResImage) {
                 ivTop.setImageResource(resImageIds[position]);
             } else {
-                ImageLoader.display(context, ivTop, topStories.get(position).getImage());
+                ImageLoader.getInstance().display(context, ivTop, topStories.get(position).getImage());
             }
             container.addView(view);
             return view;

@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.white.bihudaily.R;
 import com.white.bihudaily.utils.CacheCleanUtil;
+import com.white.bihudaily.utils.IntentUtils;
 
 public class SettingsFragment extends PreferenceFragment implements Preference.OnPreferenceClickListener {
 
@@ -65,13 +66,20 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                 break;
 
             case "developer":
-//                AlertDialog.Builder developerBuilder = new AlertDialog.Builder(getActivity());
-//                developerBuilder.setTitle("开发者").setItems(new CharSequence[]{"GitHub", "Email"}, new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//
-//                    }
-//                }).show();
+                AlertDialog.Builder developerBuilder = new AlertDialog.Builder(getActivity());
+                developerBuilder.setTitle("开发者").setItems(new CharSequence[]{"GitHub: WhiteDG", "Email: white.hcj@gmail.com"}, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        switch (i) {
+                            case 0:
+                                IntentUtils.openBrowser(getActivity(), "https://github.com/WhiteDG/BihuDaily");
+                                break;
+                            case 1:
+                                IntentUtils.openMailApp(getActivity(), "white.hcj@gmail.com", "逼乎日报反馈", "Hi");
+                                break;
+                        }
+                    }
+                }).show();
 
                 break;
         }

@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.white.bihudaily.R;
 import com.white.bihudaily.bean.Editor;
-import com.white.bihudaily.utils.ImageLoader;
+import com.white.bihudaily.utils.imageloader.ImageLoader;
 
 import java.util.List;
 
@@ -43,18 +43,7 @@ public class EditorListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         final Editor editor = mEditors.get(position);
         if (holder instanceof EditorViewHolder) {
             final EditorViewHolder editorViewHolder = (EditorViewHolder) holder;
-            ImageLoader.displayCircularImg(mContext,editorViewHolder.ivEditorImage,editor.getAvatar());
-//            Glide.with(mContext).load(editor.getAvatar()).asBitmap().fitCenter().centerCrop()
-//                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-//                    .into(new BitmapImageViewTarget(editorViewHolder.ivEditorImage) {
-//                        @Override
-//                        protected void setResource(Bitmap resource) {
-//                            RoundedBitmapDrawable circularBitmapDrawable =
-//                                    RoundedBitmapDrawableFactory.create(mContext.getResources(), resource);
-//                            circularBitmapDrawable.setCircular(true);
-//                            editorViewHolder.ivEditorImage.setImageDrawable(circularBitmapDrawable);
-//                        }
-//                    });
+            ImageLoader.getInstance().displayCircularImg(mContext, editorViewHolder.ivEditorImage, editor.getAvatar());
             editorViewHolder.tvEditorBio.setText(editor.getBio());
             editorViewHolder.tvEditorName.setText(editor.getName());
         }

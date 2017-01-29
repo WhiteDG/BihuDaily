@@ -74,7 +74,7 @@ public class DailyFragment extends BaseFragment<DailyContract.Presenter> impleme
     protected void initView() {
         mRvStories.setLayoutManager(new LinearLayoutManager(getContext()));
         mRvStories.setItemAnimator(new DefaultItemAnimator());
-        mRvStories.setHasFixedSize(true);
+        mRvStories.setHasFixedSize(false);
         mStoryAdapter = new StoriesAdapter(new ArrayList<Story>(0), this);
         mRvStories.setAdapter(mStoryAdapter);
         mSrl_stories.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
@@ -158,7 +158,8 @@ public class DailyFragment extends BaseFragment<DailyContract.Presenter> impleme
      */
     private View initHeaderView(final List<TopStory> topStories) {
         if (topStories != null && topStories.size() > 0) {
-            View headerView = LayoutInflater.from(getContext()).inflate(R.layout.header_viewpager, mRvStories, false);
+//            View headerView = LayoutInflater.from(getContext()).inflate(R.layout.header_viewpager, mRvStories, false);
+            View headerView = LayoutInflater.from(getContext()).inflate(R.layout.header_viewpager, null, false);
             FrameLayout flTop = (FrameLayout) headerView.findViewById(R.id.fl_top); // 放ViewPager的framelayout
             LinearLayout LlDots = (LinearLayout) headerView.findViewById(R.id.ll_dots);// 放小圆点的linerlayout
             // 初始化viewpager，小圆点

@@ -13,7 +13,7 @@ import com.white.bihudaily.base.BaseRVAdapter;
 import com.white.bihudaily.bean.Comment;
 import com.white.bihudaily.bean.Story;
 import com.white.bihudaily.utils.ActivityUtils;
-import com.white.bihudaily.utils.ImageLoader;
+import com.white.bihudaily.utils.imageloader.ImageLoader;
 
 import java.util.List;
 
@@ -89,7 +89,7 @@ public class CommentAdapter extends BaseRVAdapter<Comment> {
             commentViewHolder.tvDate.setText(comment.getTime());
             commentViewHolder.tvLikeCount.setText(String.valueOf(comment.getLikes()));
             commentViewHolder.tvName.setText(comment.getAuthor());
-            ImageLoader.displayCircularImg(mActivity, commentViewHolder.ivAvatar, comment.getAvatar());
+            ImageLoader.getInstance().displayCircularImg(mActivity, commentViewHolder.ivAvatar, comment.getAvatar());
         }
     }
 

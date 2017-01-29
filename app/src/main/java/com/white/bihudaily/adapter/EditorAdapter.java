@@ -9,7 +9,7 @@ import android.widget.ImageView;
 
 import com.white.bihudaily.R;
 import com.white.bihudaily.bean.Editor;
-import com.white.bihudaily.utils.ImageLoader;
+import com.white.bihudaily.utils.imageloader.ImageLoader;
 
 import java.util.List;
 
@@ -42,7 +42,7 @@ public class EditorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         final Editor editor = mEditors.get(position);
         if (holder instanceof EditorViewHolder) {
             final EditorViewHolder editorViewHolder = (EditorViewHolder) holder;
-            ImageLoader.displayCircularImg(mFragment, editorViewHolder.ivEditorImage, editor.getAvatar());
+            ImageLoader.getInstance().displayCircularImg(mFragment, editorViewHolder.ivEditorImage, editor.getAvatar());
         }
     }
 
