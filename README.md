@@ -48,6 +48,7 @@ API来自 https://github.com/izzyleung/ZhihuDailyPurify/wiki/知乎日报-API-�
 * [Retrofit](https://github.com/square/retrofit)
 * [Glide](https://github.com/bumptech/glide)
 * [PhotoView](https://github.com/chrisbanes/PhotoView)
+* [RxJava](https://github.com/ReactiveX/RxJava)
 
 [1]: https://github.com/WhiteDG/BihuDaily/blob/master/screenshot/index.jpg
 [2]: https://github.com/WhiteDG/BihuDaily/blob/master/screenshot/content.jpg
