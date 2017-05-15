@@ -94,7 +94,7 @@ public class CommentActivity extends BaseWithToolbarActivity<CommentContract.Pre
             @Override
             public void onItemClick(RecyclerView parent, View clickedView, int position) {
                 Comment showShortComment = mCommentAdapter.getItem(position);
-                if (showShortComment.getShowType() == AdapterBean.TYPE_TITLE && showShortComment.getContent().contains("短评")) {
+                if (showShortComment.getShowType() == AdapterBean.TYPE_TITLE && showShortComment.getContent().contains(getString(R.string.short_comment_title))) {
                     // 展开短评
                     mPresenter.loadShortComment(storyId);
                 }

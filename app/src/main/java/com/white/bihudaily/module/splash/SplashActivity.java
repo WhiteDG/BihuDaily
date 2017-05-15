@@ -1,9 +1,8 @@
 package com.white.bihudaily.module.splash;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
@@ -11,18 +10,13 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.SimpleTarget;
 import com.white.bihudaily.R;
 import com.white.bihudaily.app.Constant;
 import com.white.bihudaily.base.BaseActivity;
 import com.white.bihudaily.bean.StartImg;
 import com.white.bihudaily.data.impl.SplashRepository;
+import com.white.bihudaily.service.SplashService;
 import com.white.bihudaily.utils.ActivityUtils;
-import com.white.bihudaily.utils.CommonUtil;
-import com.white.bihudaily.utils.SPUtils;
-
-import java.io.File;
 
 import butterknife.BindView;
 
@@ -38,8 +32,6 @@ public class SplashActivity extends BaseActivity<SplashContract.Presenter> imple
 
     @Override
     protected void beforeContentView() {
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
     @Override
@@ -99,6 +91,11 @@ public class SplashActivity extends BaseActivity<SplashContract.Presenter> imple
     }
 
     @Override
+    public Context getContext() {
+        return this;
+    }
+
+    @Override
     public void showImg(String imgUrl) {
         Glide.with(this).
                 load(imgUrl).
@@ -121,19 +118,9 @@ public class SplashActivity extends BaseActivity<SplashContract.Presenter> imple
 
     @Override
     public void getStartImgSuccess(final StartImg startImg) {
-
-        Glide.with(this).load(startImg.getImg())
-                .downloadOnly(new SimpleTarget<File>() {
-                    @Override
-                    public void onResourceReady(File resource, GlideAnimation<? super File> glideAnimation) {
-                        //缓存版权信息
-                        SPUtils.put(SplashActivity.this, Constant.KEY_START_IMG_TEXT, startImg.getText());
-                        //保存当前日期
-                        SPUtils.put(getApplicationContext(), Constant.KEY_TODAY, CommonUtil.getToday());
-                        // 缓存图片
-                        SPUtils.put(SplashActivity.this, Constant.KEY_START_IMG_PATH, resource.getAbsolutePath());
-                    }
-                });
+        Intent intent = new Intent(this, SplashService.class);
+        intent.putExtra(Constant.IMAGE_URL, startImg);
+        startService(intent);
     }
 
     @Override

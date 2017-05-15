@@ -38,11 +38,13 @@ public class BihuDailyApplication extends Application {
         if (isNightMode) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }
-        activityList = new ArrayList<>();
     }
 
 
     public static void addActivity(Activity activity) {
+        if (activityList == null) {
+            activityList = new ArrayList<>();
+        }
         if (!activityList.contains(activity)) {
             activityList.add(activity);
         }

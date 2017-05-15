@@ -8,8 +8,11 @@ import com.white.bihudaily.bean.StoryExtra;
 import com.white.bihudaily.bean.Theme;
 import com.white.bihudaily.bean.Themes;
 
+import okhttp3.ResponseBody;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
+import retrofit2.http.Streaming;
+import retrofit2.http.Url;
 import rx.Observable;
 
 /**
@@ -22,6 +25,11 @@ public interface BihuApi {
     // 闪屏页图片
     @GET("start-image/1080*1776")
     Observable<StartImg> getStartImg();
+
+    @Streaming
+    @GET
+    Observable<ResponseBody> downloadImage(@Url String imgUrl);
+
 
     // 今日热闻
     @GET("news/latest")

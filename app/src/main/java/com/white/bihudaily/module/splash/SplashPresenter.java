@@ -1,19 +1,16 @@
 package com.white.bihudaily.module.splash;
 
 import android.app.Activity;
+import android.content.Intent;
 
 import com.white.bihudaily.BasePresenterImpl;
 import com.white.bihudaily.R;
 import com.white.bihudaily.app.Constant;
-import com.white.bihudaily.base.BaseSubscriber;
-import com.white.bihudaily.bean.StartImg;
 import com.white.bihudaily.data.SplashSource;
+import com.white.bihudaily.service.SplashService;
 import com.white.bihudaily.utils.CommonUtil;
 import com.white.bihudaily.utils.NetUtils;
 import com.white.bihudaily.utils.SPUtils;
-import com.white.bihudaily.utils.TransformUtils;
-
-import rx.Subscription;
 
 /**
  * Author White
@@ -29,19 +26,8 @@ public class SplashPresenter extends BasePresenterImpl<SplashSource, SplashContr
 
     @Override
     public void loadImg() {
-        Subscription subscription = mSource.loadImg().compose(TransformUtils.<StartImg>defaultSchedulers())
-                .subscribe(new BaseSubscriber<StartImg>() {
-                    @Override
-                    protected void onFailure(Throwable e) {
-
-                    }
-
-                    @Override
-                    protected void onSuccess(StartImg startImg) {
-                        mView.getStartImgSuccess(startImg);
-                    }
-                });
-        mSubscriptions.add(subscription);
+        Intent intent = new Intent(mView.getContext(), SplashService.class);
+        mView.getContext().startService(intent);
     }
 
     @Override
@@ -71,6 +57,8 @@ public class SplashPresenter extends BasePresenterImpl<SplashSource, SplashContr
                 // 没有缓存
                 mView.showImg(R.drawable.splash);
                 loadImg();
+                // 没有缓存
+                mView.showImg(R.drawable.splash);
             }
         }
     }

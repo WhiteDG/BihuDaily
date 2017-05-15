@@ -29,6 +29,7 @@ public class Constant {
     public static final String EDITOR = "EDITOR";
     public static final String IMG_URL = "IMG_URL";
     public static final String IMG_URL_LIST = "IMG_URL_LIST";
+    public static final String IMAGE_URL = "imageUrl";
 
     // ==================== 数据库相关 =====================
     public static final String DB_NAME = "BiHu.db";

@@ -1,6 +1,7 @@
 package com.white.bihudaily.module.splash;
 
 import android.app.Activity;
+import android.content.Context;
 
 import com.white.bihudaily.BasePresenter;
 import com.white.bihudaily.BaseView;
@@ -24,6 +25,8 @@ public interface SplashContract {
         void getStartImgSuccess(StartImg startImg);
 
         void showImg(int resId);
+
+        Context getContext();
     }
 
     interface Presenter extends BasePresenter {
