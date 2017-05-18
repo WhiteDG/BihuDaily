@@ -24,23 +24,23 @@ API来自 https://github.com/izzyleung/ZhihuDailyPurify/wiki/知乎日报-API-�
 
 * 首页
 
-![截屏][1]
+<img src='https://github.com/WhiteDG/BihuDaily/blob/master/screenshot/index.jpg' height='500'/>
 
 * 详情页
 
-![截屏][2]
+<img src='https://github.com/WhiteDG/BihuDaily/blob/master/screenshot/content.jpg' height='500'/>
 
 * 评论
 
-![截屏][3]
+<img src='https://github.com/WhiteDG/BihuDaily/blob/master/screenshot/comment.jpg' height='500'/>
 
 * 主题列表
 
-![截屏][4]
+<img src='https://github.com/WhiteDG/BihuDaily/blob/master/screenshot/theme.jpg' height='500'/>
 
 * 夜间模式
 
-![截屏][5]
+<img src='https://github.com/WhiteDG/BihuDaily/blob/master/screenshot/night.jpg' height='500'/>
 
 
 ## 使用到的开源库
@@ -49,9 +49,3 @@ API来自 https://github.com/izzyleung/ZhihuDailyPurify/wiki/知乎日报-API-�
 * [Glide](https://github.com/bumptech/glide)
 * [PhotoView](https://github.com/chrisbanes/PhotoView)
 * [RxJava](https://github.com/ReactiveX/RxJava)
-
-[1]: https://github.com/WhiteDG/BihuDaily/blob/master/screenshot/index.jpg
-[2]: https://github.com/WhiteDG/BihuDaily/blob/master/screenshot/content.jpg
-[3]: https://github.com/WhiteDG/BihuDaily/blob/master/screenshot/comment.jpg
-[4]: https://github.com/WhiteDG/BihuDaily/blob/master/screenshot/theme.jpg
-[5]: https://github.com/WhiteDG/BihuDaily/blob/master/screenshot/night.jpg
