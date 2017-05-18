@@ -2,7 +2,7 @@ package com.white.bihudaily;
 
 import com.white.bihudaily.base.BaseSource;
 
-import rx.subscriptions.CompositeSubscription;
+import io.reactivex.disposables.CompositeDisposable;
 
 /**
  * Author White
@@ -14,13 +14,13 @@ public class BasePresenterImpl<S extends BaseSource, V extends BaseView> impleme
     protected final S mSource;
     protected V mView;
 
-    protected CompositeSubscription mSubscriptions;
+    protected CompositeDisposable mSubscriptions;
 
     public BasePresenterImpl(S source, V view) {
         this.mView = view;
         this.mSource = source;
         mView.setPresenter(this);
-        mSubscriptions = new CompositeSubscription();
+        mSubscriptions = new CompositeDisposable();
     }
 
     @Override
@@ -30,8 +30,8 @@ public class BasePresenterImpl<S extends BaseSource, V extends BaseView> impleme
 
     @Override
     public void unSubscribe() {
-        if (mSubscriptions != null && mSubscriptions.hasSubscriptions()) {
-            mSubscriptions.unsubscribe();
+        if (mSubscriptions != null) {
+            mSubscriptions.dispose();
             mSubscriptions.clear();
         }
     }

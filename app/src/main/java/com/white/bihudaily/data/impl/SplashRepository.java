@@ -5,7 +5,7 @@ import com.white.bihudaily.base.BaseRepository;
 import com.white.bihudaily.bean.StartImg;
 import com.white.bihudaily.data.SplashSource;
 
-import rx.Observable;
+import io.reactivex.Observable;
 
 /**
  * Author White

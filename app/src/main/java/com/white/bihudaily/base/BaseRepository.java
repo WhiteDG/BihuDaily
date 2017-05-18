@@ -21,7 +21,7 @@ public class BaseRepository implements BaseSource {
      * @param subscriber
      */
 //    protected void rxRetrofit(Observable observable, Subscriber subscriber) {
-//        Subscription subscribe = observable.subscribeOn(Schedulers.io())
+//        observable.subscribeOn(Schedulers.io())
 //                .observeOn(AndroidSchedulers.mainThread())
 //                .subscribe(subscriber);
 //        addSubscribe(subscribe);

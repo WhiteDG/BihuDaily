@@ -12,7 +12,7 @@ import com.white.bihudaily.db.StarDao;
 
 import java.util.List;
 
-import rx.Observable;
+import io.reactivex.Observable;
 
 /**
  * Author White

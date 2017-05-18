@@ -11,8 +11,8 @@ import com.white.bihudaily.db.ReaderDao;
 
 import java.util.List;
 
-import rx.Observable;
-import rx.functions.Action1;
+import io.reactivex.Observable;
+import io.reactivex.functions.Consumer;
 
 /**
  * Author White
@@ -21,9 +21,9 @@ import rx.functions.Action1;
  */
 public class ThemeRepository extends BaseRepository implements ThemeSource {
 
-    Action1<Theme> mAction1 = new Action1<Theme>() {
+    Consumer<Theme> mConsumer = new Consumer<Theme>() {
         @Override
-        public void call(Theme theme) {
+        public void accept(Theme theme) throws Exception {
             // 标记已读
             List<Integer> reader = new ReaderDao(BihuDailyApplication.getAppContext())
                     .getReaderList();
@@ -53,12 +53,12 @@ public class ThemeRepository extends BaseRepository implements ThemeSource {
 
     @Override
     public Observable<Theme> loadTheme(int id) {
-        return mBihuApi.getTheme(id).doOnNext(mAction1);
+        return mBihuApi.getTheme(id).doOnNext(mConsumer);
     }
 
 
     @Override
     public Observable<Theme> loadBeforeTheme(int themeId, int storyId) {
-        return mBihuApi.getBeforeTheme(themeId, storyId).doOnNext(mAction1);
+        return mBihuApi.getBeforeTheme(themeId, storyId).doOnNext(mConsumer);
     }
 }

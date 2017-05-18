@@ -1,16 +1,16 @@
 package com.white.bihudaily.base;
 
-import rx.Subscriber;
+import io.reactivex.Observer;
 
 /**
  * Author White
  * Date 2016/8/16
  * Time 23:25
  */
-public abstract class BaseSubscriber<T> extends Subscriber<T> {
+public abstract class BaseSubscriber<T> implements Observer<T> {
 
     @Override
-    public void onCompleted() {
+    public void onComplete() {
 
     }
 

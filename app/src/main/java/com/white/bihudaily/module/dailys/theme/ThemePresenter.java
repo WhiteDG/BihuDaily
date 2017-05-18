@@ -12,7 +12,7 @@ import com.white.bihudaily.utils.TransformUtils;
 
 import java.util.List;
 
-import rx.Subscription;
+import io.reactivex.disposables.Disposable;
 
 /**
  * Author White
@@ -28,9 +28,14 @@ public class ThemePresenter extends BasePresenterImpl<ThemeSource, ThemeContract
     @Override
     public void loadTheme(int id, final Context context) {
         mView.setRefreshLoadingIndicator(true);
-        Subscription subscription = mSource.loadTheme(id)
+        mSource.loadTheme(id)
                 .compose(TransformUtils.<Theme>defaultSchedulers())
                 .subscribe(new BaseSubscriber<Theme>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        mSubscriptions.add(d);
+                    }
+
                     @Override
                     protected void onFailure(Throwable e) {
                         mView.setRefreshLoadingIndicator(false);
@@ -45,14 +50,19 @@ public class ThemePresenter extends BasePresenterImpl<ThemeSource, ThemeContract
                         mView.showTheme(theme);
                     }
                 });
-        mSubscriptions.add(subscription);
+
     }
 
     @Override
     public void loadBeforeTheme(int themeId, int storyId) {
         mView.showLoadMore(true);
-        Subscription subscribe = mSource.loadBeforeTheme(themeId, storyId).compose(TransformUtils.<Theme>defaultSchedulers())
+        mSource.loadBeforeTheme(themeId, storyId).compose(TransformUtils.<Theme>defaultSchedulers())
                 .subscribe(new BaseSubscriber<Theme>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        mSubscriptions.add(d);
+                    }
+
                     @Override
                     protected void onFailure(Throwable e) {
                         mView.showLoadMore(false);
@@ -67,7 +77,7 @@ public class ThemePresenter extends BasePresenterImpl<ThemeSource, ThemeContract
                         mView.addBeforeTheme(stories);
                     }
                 });
-        mSubscriptions.add(subscribe);
+
     }
 
     @Override

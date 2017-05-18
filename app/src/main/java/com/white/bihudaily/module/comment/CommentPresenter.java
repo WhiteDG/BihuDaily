@@ -10,7 +10,7 @@ import com.white.bihudaily.utils.TransformUtils;
 
 import java.util.List;
 
-import rx.Subscription;
+import io.reactivex.disposables.Disposable;
 
 /**
  * Author White
@@ -27,8 +27,13 @@ public class CommentPresenter extends BasePresenterImpl<CommentSource, CommentCo
     @Override
     public void loadLongComment(int storyId) {
         mView.showLoading(true);
-        Subscription subscription = mSource.loadLongComment(storyId).compose(TransformUtils.<Comments>defaultSchedulers())
+        mSource.loadLongComment(storyId).compose(TransformUtils.<Comments>defaultSchedulers())
                 .subscribe(new BaseSubscriber<Comments>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        mSubscriptions.add(d);
+                    }
+
                     @Override
                     protected void onFailure(Throwable e) {
                         mView.showLoading(false);
@@ -41,14 +46,18 @@ public class CommentPresenter extends BasePresenterImpl<CommentSource, CommentCo
                         mView.showLongComment(comments);
                     }
                 });
-        mSubscriptions.add(subscription);
     }
 
     @Override
     public void loadShortComment(int storyId) {
         mView.showLoading(true);
-        Subscription subscription = mSource.loadShortComment(storyId).compose(TransformUtils.<Comments>defaultSchedulers())
+        mSource.loadShortComment(storyId).compose(TransformUtils.<Comments>defaultSchedulers())
                 .subscribe(new BaseSubscriber<Comments>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        mSubscriptions.add(d);
+                    }
+
                     @Override
                     protected void onFailure(Throwable e) {
                         mView.showLoading(false);
@@ -67,14 +76,18 @@ public class CommentPresenter extends BasePresenterImpl<CommentSource, CommentCo
                         }
                     }
                 });
-        mSubscriptions.add(subscription);
     }
 
     @Override
     public void loadBeforeShortComment(int storyId, int lastCommentId) {
         mView.showLoadMore(true);
-        Subscription subscription = mSource.loadBeforeComment(storyId, lastCommentId).compose(TransformUtils.<Comments>defaultSchedulers())
+        mSource.loadBeforeComment(storyId, lastCommentId).compose(TransformUtils.<Comments>defaultSchedulers())
                 .subscribe(new BaseSubscriber<Comments>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        mSubscriptions.add(d);
+                    }
+
                     @Override
                     protected void onFailure(Throwable e) {
                         mView.showLoadMore(false);
@@ -93,7 +106,6 @@ public class CommentPresenter extends BasePresenterImpl<CommentSource, CommentCo
                         }
                     }
                 });
-        mSubscriptions.add(subscription);
 
     }
 

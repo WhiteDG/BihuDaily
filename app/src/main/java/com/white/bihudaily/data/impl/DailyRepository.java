@@ -16,9 +16,9 @@ import com.white.bihudaily.utils.SPUtils;
 
 import java.util.List;
 
-import rx.Observable;
-import rx.functions.Action1;
-import rx.functions.Func1;
+import io.reactivex.Observable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 
 /**
  * Author White
@@ -27,9 +27,10 @@ import rx.functions.Func1;
  */
 public class DailyRepository extends BaseRepository implements DailySource {
 
-    Action1<Latest> mAction1 = new Action1<Latest>() {
+
+    Consumer<Latest> mConsumer = new Consumer<Latest>() {
         @Override
-        public void call(Latest latest) {
+        public void accept(Latest latest) throws Exception {
             // 标记已读
             List<Integer> reader = getReader(BihuDailyApplication.getAppContext());
             List<Story> stories = latest.getStories();
@@ -50,10 +51,9 @@ public class DailyRepository extends BaseRepository implements DailySource {
 
     @Override
     public Observable<Latest> getCache(Context context) {
-        return Observable.just(context).map(new Func1<Context, Latest>() {
-
+        return Observable.just(context).map(new Function<Context, Latest>() {
             @Override
-            public Latest call(Context context) {
+            public Latest apply(Context context) throws Exception {
                 StoryDao storyDao = new StoryDao();
                 Latest latest = new Latest();
                 latest.setStories(storyDao.getStoryList());
@@ -62,7 +62,20 @@ public class DailyRepository extends BaseRepository implements DailySource {
                 latest.setDate(date);
                 return latest;
             }
-        }).doOnNext(mAction1);
+        }).doOnNext(mConsumer);
+//        return Observable.just(context).map(new Func1<Context, Latest>() {
+//
+//            @Override
+//            public Latest call(Context context) {
+//                StoryDao storyDao = new StoryDao();
+//                Latest latest = new Latest();
+//                latest.setStories(storyDao.getStoryList());
+//                latest.setTop_stories(storyDao.getTopStoryList());
+//                String date = (String) SPUtils.get(context, Constant.KEY_CURRENT_DATE, "");
+//                latest.setDate(date);
+//                return latest;
+//            }
+//        }).doOnNext(mAction1);
     }
 
     @Override
@@ -87,21 +100,21 @@ public class DailyRepository extends BaseRepository implements DailySource {
 
     @Override
     public Observable<Latest> loadLatest(final Context context) {
-        return mBihuApi.getLatest().doOnNext(new Action1<Latest>() {
+        return mBihuApi.getLatest().doOnNext(new Consumer<Latest>() {
             @Override
-            public void call(Latest latest) {
+            public void accept(Latest latest) throws Exception {
                 // 缓存第一页数据
                 saveCache(context, latest.getStories(), latest.getTop_stories());
                 SPUtils.put(context, Constant.KEY_CURRENT_DATE, latest.getDate());
                 SPUtils.put(context, Constant.KEY_HAS_CACHE, true);
             }
-        }).doOnNext(mAction1);
+        }).doOnNext(mConsumer);
     }
 
     @Override
     public Observable<Latest> loadBefore(String date) {
         return mBihuApi.getBefore(date)
-                .doOnNext(mAction1);
+                .doOnNext(mConsumer);
     }
 
 

@@ -1,9 +1,12 @@
 package com.white.bihudaily.utils;
 
 
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.ObservableTransformer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+
 
 /**
  * Author White
@@ -12,24 +15,24 @@ import rx.schedulers.Schedulers;
  */
 public class TransformUtils {
 
-    public static <T> Observable.Transformer<T, T> defaultSchedulers() {
-        return new Observable.Transformer<T, T>() {
-
+    public static <T> ObservableTransformer<T, T> defaultSchedulers() {
+        return new ObservableTransformer<T, T>() {
             @Override
-            public Observable<T> call(Observable<T> tObservable) {
-                return tObservable.observeOn(AndroidSchedulers.mainThread())
-                        .subscribeOn(Schedulers.io());
+            public ObservableSource<T> apply(Observable<T> upstream) {
+                return upstream
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread());
             }
         };
     }
 
-    public static <T> Observable.Transformer<T, T> allIO() {
-        return new Observable.Transformer<T, T>() {
-
+    public static <T> ObservableTransformer<T, T> allIO() {
+        return new ObservableTransformer<T, T>() {
             @Override
-            public Observable<T> call(Observable<T> tObservable) {
-                return tObservable.observeOn(Schedulers.io())
-                        .subscribeOn(Schedulers.io());
+            public ObservableSource<T> apply(Observable<T> upstream) {
+                return upstream
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(Schedulers.io());
             }
         };
     }

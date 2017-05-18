@@ -3,8 +3,7 @@ package com.white.bihudaily.data;
 import com.white.bihudaily.base.BaseSource;
 import com.white.bihudaily.bean.StartImg;
 
-import rx.Observable;
-import rx.Subscriber;
+import io.reactivex.Observable;
 
 /**
  * Author White

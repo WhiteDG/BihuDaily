@@ -12,7 +12,7 @@ import com.white.bihudaily.utils.TransformUtils;
 
 import java.util.List;
 
-import rx.Subscription;
+import io.reactivex.disposables.Disposable;
 
 /**
  * Author White
@@ -30,9 +30,14 @@ public class DailyPresenter extends BasePresenterImpl<DailySource, DailyContract
     @Override
     public void loadLatest(final Context context, final boolean getFromCache) {
         if (getFromCache) {
-            Subscription subscribe = mSource.getCache(context)
+            mSource.getCache(context)
                     .compose(TransformUtils.<Latest>defaultSchedulers())
                     .subscribe(new BaseSubscriber<Latest>() {
+                        @Override
+                        public void onSubscribe(Disposable d) {
+                            mSubscriptions.add(d);
+                        }
+
                         @Override
                         protected void onFailure(Throwable e) {
 
@@ -46,13 +51,17 @@ public class DailyPresenter extends BasePresenterImpl<DailySource, DailyContract
                             }
                         }
                     });
-            mSubscriptions.add(subscribe);
             return;
         }
         mView.setRefreshLoadingIndicator(true);
-        Subscription subscription = mSource.loadLatest(context).compose(TransformUtils.<Latest>defaultSchedulers())
+        mSource.loadLatest(context).compose(TransformUtils.<Latest>defaultSchedulers())
 
                 .subscribe(new BaseSubscriber<Latest>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        mSubscriptions.add(d);
+                    }
+
                     @Override
                     protected void onFailure(Throwable e) {
                         mView.setRefreshLoadingIndicator(false);
@@ -70,15 +79,20 @@ public class DailyPresenter extends BasePresenterImpl<DailySource, DailyContract
                         mView.showLatest(latest);
                     }
                 });
-        mSubscriptions.add(subscription);
+
 
     }
 
     @Override
     public void loadBefore(String date) {
         mView.showLoadMore(true);
-        Subscription subscription = mSource.loadBefore(date).compose(TransformUtils.<Latest>defaultSchedulers())
+        mSource.loadBefore(date).compose(TransformUtils.<Latest>defaultSchedulers())
                 .subscribe(new BaseSubscriber<Latest>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        mSubscriptions.add(d);
+                    }
+
                     @Override
                     protected void onFailure(Throwable e) {
                         mView.showLoadMore(false);
@@ -92,7 +106,7 @@ public class DailyPresenter extends BasePresenterImpl<DailySource, DailyContract
                         mView.addBefore(latest.getStories());
                     }
                 });
-        mSubscriptions.add(subscription);
+
     }
 
     @Override

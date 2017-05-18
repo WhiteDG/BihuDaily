@@ -12,7 +12,7 @@ import com.white.bihudaily.utils.TransformUtils;
 
 import java.util.List;
 
-import rx.Subscription;
+import io.reactivex.disposables.Disposable;
 
 /**
  * Author White
@@ -29,8 +29,13 @@ public class DetailPresenter extends BasePresenterImpl<DetailSource, DetailContr
     @Override
     public void loadDetailContent(int storyId) {
         mView.showLoading(true);
-        Subscription subscription = mSource.loadDetailContent(storyId).compose(TransformUtils.<DetailContent>defaultSchedulers())
+        mSource.loadDetailContent(storyId).compose(TransformUtils.<DetailContent>defaultSchedulers())
                 .subscribe(new BaseSubscriber<DetailContent>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        mSubscriptions.add(d);
+                    }
+
                     @Override
                     protected void onFailure(Throwable e) {
                         mView.showLoading(false);
@@ -43,14 +48,19 @@ public class DetailPresenter extends BasePresenterImpl<DetailSource, DetailContr
                         mView.showDetail(detailContent);
                     }
                 });
-        mSubscriptions.add(subscription);
+
 
     }
 
     @Override
     public void loadStoryExtra(int storyId) {
-        Subscription subscription = mSource.loadStoryExtra(storyId).compose(TransformUtils.<StoryExtra>defaultSchedulers())
+        mSource.loadStoryExtra(storyId).compose(TransformUtils.<StoryExtra>defaultSchedulers())
                 .subscribe(new BaseSubscriber<StoryExtra>() {
+
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        mSubscriptions.add(d);
+                    }
 
                     @Override
                     protected void onFailure(Throwable e) {
@@ -62,7 +72,7 @@ public class DetailPresenter extends BasePresenterImpl<DetailSource, DetailContr
                         mView.showStoryExtra(storyExtra);
                     }
                 });
-        mSubscriptions.add(subscription);
+
     }
 
     @Override

@@ -6,11 +6,12 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.github.chrisbanes.photoview.PhotoView;
 import com.white.bihudaily.R;
 
 import java.util.List;
 
-import uk.co.senab.photoview.PhotoView;
+
 
 /**
  * Author White

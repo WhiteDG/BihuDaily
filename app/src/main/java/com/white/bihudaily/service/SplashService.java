@@ -15,12 +15,12 @@ import com.white.bihudaily.utils.TransformUtils;
 import java.io.File;
 import java.io.IOException;
 
+import io.reactivex.ObservableSource;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 import okhttp3.ResponseBody;
 import okio.BufferedSink;
 import okio.Okio;
-import rx.Observable;
-import rx.functions.Action1;
-import rx.functions.Func1;
 
 /**
  * Author White
@@ -38,25 +38,26 @@ public class SplashService extends IntentService {
         // 后台下载图片
         BihuClient.getBihuService()
                 .getStartImg().compose(TransformUtils.<StartImg>allIO())
-                .doOnNext(new Action1<StartImg>() {
+                .doOnNext(new Consumer<StartImg>() {
                     @Override
-                    public void call(StartImg startImg) {
+                    public void accept(StartImg startImg) throws Exception {
                         //缓存版权信息
                         SPUtils.put(BihuDailyApplication.getAppContext(), Constant.KEY_START_IMG_TEXT, startImg.getText());
                         //保存当前日期
                         SPUtils.put(getApplicationContext(), Constant.KEY_TODAY, CommonUtil.getToday());
                         SPUtils.put(getApplicationContext(), Constant.IMAGE_URL, startImg.getImg());
+
                     }
                 })
-                .flatMap(new Func1<StartImg, Observable<ResponseBody>>() {
+                .flatMap(new Function<StartImg, ObservableSource<ResponseBody>>() {
                     @Override
-                    public Observable<ResponseBody> call(StartImg startImg) {
+                    public ObservableSource<ResponseBody> apply(StartImg startImg) throws Exception {
                         return BihuClient.getBihuService().downloadImage(startImg.getImg());
                     }
                 })
-                .map(new Func1<ResponseBody, String>() {
+                .map(new Function<ResponseBody, String>() {
                     @Override
-                    public String call(ResponseBody responseBody) {
+                    public String apply(ResponseBody responseBody) throws Exception {
                         String imageUrl = (String) SPUtils.get(getApplicationContext(), Constant.IMAGE_URL, "");
                         File file = saveFile(responseBody, getCacheDir().getAbsolutePath(),
                                 TextUtils.isEmpty(imageUrl) ? "splash.jpg" :
@@ -64,11 +65,12 @@ public class SplashService extends IntentService {
                         return file.getAbsolutePath();
                     }
                 })
-                .subscribe(new Action1<String>() {
+                .subscribe(new Consumer<String>() {
                     @Override
-                    public void call(String s) {
+                    public void accept(String s) throws Exception {
                         // 缓存图片
                         SPUtils.put(BihuDailyApplication.getAppContext(), Constant.KEY_START_IMG_PATH, s);
+
                     }
                 });
     }

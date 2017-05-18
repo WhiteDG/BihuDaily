@@ -17,7 +17,7 @@ import okhttp3.Response;
 import retrofit2.CallAdapter;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
@@ -26,10 +26,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Time 13:26
  */
 public class BihuClient {
-    private static BihuApi mBihuApi;
-    private static OkHttpClient okHttpClient;
-    private static Converter.Factory gsonConverterFactory = GsonConverterFactory.create();
-    private static CallAdapter.Factory rxJavaCallAdapterFactory = RxJavaCallAdapterFactory.create();
+    private static BihuApi sBihuApi;
+    private static OkHttpClient sOkHttpClient;
+    private static Converter.Factory sGsonConverterFactory = GsonConverterFactory.create();
+    private static CallAdapter.Factory sRxJava2CallAdapterFactory = RxJava2CallAdapterFactory.create();
 
     private static final int DEFAULT_TIMEOUT = 10;
     private static final int CACHE_SIZE = 10 * 1024 * 1024;
@@ -58,8 +58,8 @@ public class BihuClient {
 
     public static BihuApi getBihuService() {
 
-        if (mBihuApi == null) {
-            if (okHttpClient == null) {
+        if (sBihuApi == null) {
+            if (sOkHttpClient == null) {
                 OkHttpClient.Builder builder = new OkHttpClient.Builder();
                 // 设置超时时间
                 builder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
@@ -82,18 +82,18 @@ public class BihuClient {
                 });
                 builder.addNetworkInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR)
                         .addInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR);
-                okHttpClient = builder.build();
+                sOkHttpClient = builder.build();
             }
 
             Retrofit retrofit = new Retrofit.Builder()
-                    .client(okHttpClient)
+                    .client(sOkHttpClient)
                     .baseUrl(Constant.BASE_URL)
-                    .addConverterFactory(gsonConverterFactory)
-                    .addCallAdapterFactory(rxJavaCallAdapterFactory)
+                    .addConverterFactory(sGsonConverterFactory)
+                    .addCallAdapterFactory(sRxJava2CallAdapterFactory)
                     .build();
-            mBihuApi = retrofit.create(BihuApi.class);
+            sBihuApi = retrofit.create(BihuApi.class);
         }
-        return mBihuApi;
+        return sBihuApi;
     }
 
 

@@ -4,7 +4,7 @@ import com.white.bihudaily.base.BaseRepository;
 import com.white.bihudaily.bean.Comments;
 import com.white.bihudaily.data.CommentSource;
 
-import rx.Observable;
+import io.reactivex.Observable;
 
 /**
  * Author White
